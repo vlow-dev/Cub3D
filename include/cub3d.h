@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/05/06 17:37:40 by vlow             ###   ########.fr       */
+/*   Updated: 2025/05/14 16:17:53 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,15 @@
 // Window size
 # define WIDTH 1920
 # define HEIGHT 1080
-# define TEX_SIZE 64
-# define MMAP_SIZE 0.20
+# define TEX_SIZE 5
+# define MMAP_SIZE 0.4
+# define MMAP_RADIUS 125
+# define MMAP_MARGIN 10
+# define TEX_NO 0
+# define TEX_SO 1
+# define TEX_WE 2
+# define TEX_EA 3
+# define TEX_DO 4
 
 //color
 # define RED	0x00FF0000
@@ -53,6 +60,8 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		x;
+	int		y;
 }	t_img;
 
 typedef struct s_map
@@ -62,6 +71,7 @@ typedef struct s_map
 	char				*so;
 	char				*we;
 	char				*ea;
+	char				*tex[TEX_SIZE];
 	unsigned int		floor;
 	unsigned int		ceiling;
 	int					y_size;
@@ -98,6 +108,7 @@ typedef struct s_player
 	int		key_down;
 	int		key_left;
 	int		key_right;
+	int		key_e;
 
 }	t_player;
 
@@ -120,16 +131,31 @@ typedef struct s_ray
 	double	len_x;
 	double	len_y;
 	double	perpDist;
+	int		door;
+	// double	door_state[];
 }	t_ray;
+
+typedef struct s_draw
+{
+	int		height;
+	int		start;
+	int		end;
+	int		tex_side;
+	int		tex_x;
+	double	wall_x;
+
+}	t_draw;
 
 typedef struct s_data
 {
 	t_vars	vars;
 	t_img	img;
+	t_img	tex[TEX_SIZE];
 	t_map	map;
 	t_minimap	mini;
 	t_player	player;
 	t_ray		ray;
+	t_draw		draw;
 }	t_data;
 
 #endif

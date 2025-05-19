@@ -7,7 +7,7 @@ LIBFT_DIR = libft
 ## MLX
 MLX_DIR = minilibx-linux
 LIB_MLX = $(MLX_DIR)/libmlx_Linux.a
-1X_FLAGS = -lXext -lX11 -lm -lz
+1X_FLAGS = -lXext -lX11 -lm -lz## -lXpm
 
 SRC = $(wildcard $(SRC_DIR)/*.c)
 
