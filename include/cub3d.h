@@ -82,8 +82,8 @@ typedef struct s_player
 	double	plane_y;
 	double	angle;
 	int		key_w;
-	int		key_s;
 	int		key_a;
+	int		key_s;
 	int		key_d;
 
 }	t_player;

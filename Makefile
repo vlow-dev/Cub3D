@@ -12,9 +12,10 @@ LIB_MLX = $(MLX_DIR)/libmlx_Linux.a
 SRC = $(wildcard $(SRC_DIR)/*.c)
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
+TEST = src/parsing.c
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 IFLAGS = -I$(INC_DIR) -I$(LIBFT_DIR)/$(INC_DIR) -I$(MLX_DIR)
 LFLAGS = -l$(LIBFT_DIR)/libft.a
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -35,6 +36,11 @@ $(LIB_MLX):
 	@make -C $(MLX_DIR) all
 
 bonus: all
+
+test:  $(LIBFT)
+	@echo "Creating $(NAME)..."
+	@$(CC) $(CFLAGS) $(IFLAGS) $(TEST) $(LIBFT) 
+	@echo "Created $(NAME)"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
@@ -71,4 +77,4 @@ fsanitize: clean all
 
 fsan: fsanitize
 
-.PHONY: all clean fclean re bonus debug valgrind fsanitize fsan fval
+.PHONY: all clean fclean re bonus debug valgrind fsanitize fsan fval test
