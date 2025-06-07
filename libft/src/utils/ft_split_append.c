@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:50:42 by vlow              #+#    #+#             */
-/*   Updated: 2025/04/16 23:16:28 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/01 16:55:59 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ char	**split_free_append(char **arr, char *str, int flag)
 		ft_memset(arr, 0, sizeof(char *));
 	}
 	if (!str)
-		return (split_free(arr), NULL);
+		return (split_free((void **)arr), NULL);
 	temp = ft_split_append(arr, str);
-	split_free(arr);
+	split_free((void **)arr);
 	if (flag)
 		free(str);
 	return (temp);
@@ -70,7 +70,7 @@ static int	join_s1(char **temp, char **s1, int *idx)
 		temp[i] = ft_strdup(s1[i]);
 		if (!temp[i])
 		{
-			split_free(temp);
+			split_free((void **)temp);
 			return (0);
 		}
 		i++;
@@ -84,7 +84,7 @@ static int	append_str(char **temp, char *str, int i)
 	temp[i] = ft_strdup(str);
 	if (!temp[i])
 	{
-		split_free(temp);
+		split_free((void **)temp);
 		return (0);
 	}
 	temp[++i] = NULL;

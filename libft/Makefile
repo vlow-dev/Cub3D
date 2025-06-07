@@ -67,6 +67,7 @@ SRC = \
 	$(NUMBER_DIR)/ft_countdigits_hex.c \
 	$(NUMBER_DIR)/ft_countdigits_u.c \
 	$(NUMBER_DIR)/ft_itoa.c \
+	$(NUMBER_DIR)/ft_itoa_pad.c \
 	$(NUMBER_DIR)/ft_itoa_hex.c \
 	$(NUMBER_DIR)/ft_itoa_u.c \
 	$(NUMBER_DIR)/ft_strtol.c \

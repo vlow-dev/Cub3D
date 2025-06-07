@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/05/14 16:17:53 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:58:42 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,48 @@
 # define TEX_WE 2
 # define TEX_EA 3
 # define TEX_DO 4
+# define COMPASS_FRAME 29
+# define DOOR_FRAME 92
 
-//color
-# define RED	0x00FF0000
-# define ORANGE	0x00FFA500
-# define YELLOW	0x00FFFF00
-# define GREEN	0x0000FF00
+/* === SOLID COLORS === */
+# define RED        0x00FF0000
+# define ORANGE     0x00FFA500
+# define YELLOW     0x00FFFF00
+# define GREEN      0x0000FF00
 # define SEMI_GREEN 0x00BFFFBF
-# define CYAN	0x0000FFFF
-# define BLUE	0x000000FF
-# define PURPLE	0x00800080
-# define WHITE	0x00FFFFFF
-# define BLACK	0x00000000
-# define GREY	0x80808080
-# define M_CYAN	0x0066FFFF
-# define T_GREY	0x00CCCCCC
-# define N_ORGE	0x00FFA07A
+# define CYAN       0x0000FFFF
+# define BLUE       0x000000FF
+# define PURPLE     0x00800080
+# define WHITE      0x00FFFFFF
+# define BLACK      0x00000000
+# define GREY       0x80808080
+# define T_GREY     0x00CCCCCC
+# define M_CYAN     0x0066FFFF
+# define N_ORGE     0x00FFA07A
 # define HIGH_COLOUR	RED
 # define LOW_COLOUR		BLUE
 # define TEXT_COLOR		T_GREY
 # define MENU_COLOR		M_CYAN
 # define NB_COLOR		N_ORGE
+
+/* === WALLS & STRUCTURES === */
+# define D_WOOD     0x00654321
+# define L_WOOD     0x00DEB887
+# define T_WOOD     0x00A0522D
+
+/* === FLOORS & CEILINGS === */
+# define FLOOR      0x00C2B280
+# define STONE      0x00A9A9A9
+# define CEILING    0x00FFF8DC
+
+/* === MINIMAP COLORS === */
+# define MM_WALL     0x00404040
+# define MM_FLOOR    0x00AAAAAA
+# define MM_DOOR_C   0x00654321
+# define MM_DOOR_O   0x00FFD700
+# define MM_PLAYER   0x00FF0000
+# define MM_VIEW     0x0000FF00
+# define MM_BORDER   0x00FFFFFF
 
 typedef struct s_vars
 {
@@ -67,16 +88,23 @@ typedef struct s_img
 typedef struct s_map
 {
 	char				**maps;
-	char				*no;
-	char				*so;
-	char				*we;
-	char				*ea;
+	// char				*no;
+	// char				*so;
+	// char				*we;
+	// char				*ea;
 	char				*tex[TEX_SIZE];
 	unsigned int		floor;
 	unsigned int		ceiling;
 	int					y_size;
 	int					x_size;
+	int					**door_open;
 }	t_map;
+
+typedef struct s_ani
+{
+	char	**frame;
+	int		idx;
+}	t_ani;
 
 typedef struct s_minimap
 {
@@ -146,16 +174,32 @@ typedef struct s_draw
 
 }	t_draw;
 
+typedef struct s_time
+{
+	int		fps_count;
+	int		fps;
+	double	st_time;
+	
+}	t_time;
+
 typedef struct s_data
 {
 	t_vars	vars;
 	t_img	img;
 	t_img	tex[TEX_SIZE];
+	t_ani	compass;
+	t_ani	door;
+	t_img	c_frame[COMPASS_FRAME];
+	t_img	d_frame[DOOR_FRAME];
 	t_map	map;
 	t_minimap	mini;
 	t_player	player;
 	t_ray		ray;
 	t_draw		draw;
+
+
+	int last_time_ms;
+	double delta_time;
 }	t_data;
 
 #endif
