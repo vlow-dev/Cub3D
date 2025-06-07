@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:30:32 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/07 18:38:51 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/07 18:46:18 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int	close_exit(t_data *data)
 	}
 	for (int i = 0; i < COMPASS_FRAME; i++)
 	{
-		mlx_destroy_image(data->vars.mlx, data->d_frame[i].img);
+		mlx_destroy_image(data->vars.mlx, data->c_frame[i].img);
 	}
 	for (int i = 0; i < DOOR_FRAME; i++)
 	{
