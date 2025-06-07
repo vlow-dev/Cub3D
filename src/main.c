@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:30:32 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/07 16:56:54 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/07 18:38:51 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	test_map(t_data *data)
 	};
 
 	int i;
-	int len;
+	int len = ft_split_size(hardcoded_map);
 
 	// Count how many lines
-	for (len = 0; hardcoded_map[len]; len++)
-		;
+	// for (len = 0; hardcoded_map[len]; len++)
+	// 	;
 
 	// Allocate space for maps
 	data->map.maps = malloc(sizeof(char *) * (len + 1));
@@ -142,6 +142,19 @@ int	close_exit(t_data *data)
 	split_free((void **)data->map.door_open);
 	split_free((void **)data->compass.frame);
 	split_free((void **)data->door.frame);
+	for (int i = 0; i < TEX_SIZE; i++)
+	{
+		free(data->map.tex[i]);
+		mlx_destroy_image(data->vars.mlx, data->tex[i].img);
+	}
+	for (int i = 0; i < COMPASS_FRAME; i++)
+	{
+		mlx_destroy_image(data->vars.mlx, data->d_frame[i].img);
+	}
+	for (int i = 0; i < DOOR_FRAME; i++)
+	{
+		mlx_destroy_image(data->vars.mlx, data->d_frame[i].img);
+	}
 	// free(data->map.no);
 	// free(data->map.so);
 	// free(data->map.we);
@@ -307,6 +320,37 @@ void	init_door_frame(t_data *data)
 
 
 void	my_pixel_put(t_data *data, int x, int y, int color);
+// void	draw_image_trans_scaled(t_data *data, t_img *src, int dst_x, int dst_y)
+// {
+// 	int				x, y;
+// 	unsigned int	color;
+// 	char			*src_pixel;
+//
+// 	y = 0;
+// 	while (y < src->y)
+// 	{
+// 		x = 0;
+// 		while (x < src->x)
+// 		{
+// 			src_pixel = src->addr + y * src->line_len + x * (src->bpp / 8);
+// 			color = *(unsigned int *)src_pixel;
+// 			if (color == 0xFF000000)
+// 				continue ;
+// 			for (int dy = 0; dy < FRAME_SCALE; ++dy)
+// 			{
+// 				for (int dx = 0; dx < FRAME_SCALE; ++dx)
+// 				{
+// 					my_pixel_put(data, dst_x + x * FRAME_SCALE + dx, dst_y + y * FRAME_SCALE + dy, color);
+//
+// 				}
+// 			}
+// 				// my_pixel_put(data, dst_x + x, dst_y + y, color);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+
 void	draw_image_trans(t_data *data, t_img *src, int dst_x, int dst_y)
 {
 	int				x, y;
@@ -338,6 +382,7 @@ void draw_compass(t_data *data)
 
     // mlx_put_image_to_window(data->vars.mlx, data->vars.win, frame->img, x, y);
 	draw_image_trans(data, frame, x, y);
+	// draw_image_trans_scaled(data, frame, x, y);
     data->compass.idx = (data->compass.idx + 1) % COMPASS_FRAME;
 }
 
@@ -385,14 +430,17 @@ void	init_doors(t_data *data)
 {
     int y;
 	int	x;
+	int	x_len;
 
-    data->map.door_open = malloc(sizeof(int *) * data->map.y_size);
+    data->map.door_open = malloc(sizeof(int *) * (data->map.y_size + 1));
+	data->map.door_open[data->map.y_size] = NULL;
 	y = -1;
 	while (++y < data->map.y_size)
 	{
-		data->map.door_open[y] = malloc(sizeof(int) * data->map.x_size);
+		x_len = ft_strlen(data->map.maps[y]);
+		data->map.door_open[y] = malloc(sizeof(int) * x_len);
 		x = -1;
-		while (++x < data->map.x_size)
+		while (++x < x_len)
 			data->map.door_open[y][x] = 0;
 	}
     // for (y = 0; y < data->map.y_size; y++)
@@ -790,7 +838,8 @@ void	draw_minimap(t_data *data)
 	while (++y < data->map.y_size)
 	{
 		x = -1;
-		while (++x < data->map.x_size)
+		int x_len = ft_strlen(data->map.maps[y]);
+		while (++x < x_len)
 		{
 			if (data->map.maps[y][x] == '1')
 				color = MM_WALL;

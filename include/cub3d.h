@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/07 16:58:42 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/07 18:19:25 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define TEX_DO 4
 # define COMPASS_FRAME 29
 # define DOOR_FRAME 92
+# define FRAME_SCALE 2
 
 /* === SOLID COLORS === */
 # define RED        0x00FF0000

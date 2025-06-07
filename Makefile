@@ -14,7 +14,7 @@ SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -o3
 IFLAGS = -I$(INC_DIR) -I$(LIBFT_DIR)/$(INC_DIR) -I$(MLX_DIR)
 LFLAGS = -l$(LIBFT_DIR)/libft.a
 LIBFT = $(LIBFT_DIR)/libft.a
