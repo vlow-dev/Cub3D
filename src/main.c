@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:30:32 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/07 18:46:18 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/10 19:57:25 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	test_map(t_data *data)
 		"111111111011000001110000000000001",
 		"100000000011000001112111111111111",
 		"11110111111111011100000010001",
-		"11110111111111011101010010001",
+		"1111011111111101 201010010001",
 		"11000000110101011100000010001",
 		"10000000000000001100000020001",
 		"10000000000000001101010010001",
@@ -68,6 +68,7 @@ void	test_map(t_data *data)
 	}
 	data->map.maps[i] = NULL; // Null-terminate maps
 
+	// just need a max x_size for minimap
 	data->map.x_size = 33;
 	data->map.y_size = len;
 	// data->map.no = ft_strdup("textures/bluestone.xpm");
@@ -151,10 +152,10 @@ int	close_exit(t_data *data)
 	{
 		mlx_destroy_image(data->vars.mlx, data->c_frame[i].img);
 	}
-	for (int i = 0; i < DOOR_FRAME; i++)
-	{
-		mlx_destroy_image(data->vars.mlx, data->d_frame[i].img);
-	}
+	// for (int i = 0; i < DOOR_FRAME; i++)
+	// {
+	// 	mlx_destroy_image(data->vars.mlx, data->d_frame[i].img);
+	// }
 	// free(data->map.no);
 	// free(data->map.so);
 	// free(data->map.we);
@@ -232,6 +233,8 @@ void	init_tex(t_data *data)
 	}
 }
 
+
+// since its a hardcoded name, either make it dynamic or do a safeguard checks before executing
 void	init_compass_frame_tex(t_data *data)
 {
 	int i;
@@ -277,46 +280,46 @@ void	init_compass_frame(t_data *data)
 // maybe just remove this shit
 //
 
-void	init_door_frame_tex(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	data->door.frame = ft_calloc(DOOR_FRAME + 1, sizeof(char *));
-	while (++i < DOOR_FRAME)
-	{
-		 data->door.frame[i] = ft_strjoin_free(data->door.frame[i], "textures/door_frame/door_", 0);
-		 data->door.frame[i] = ft_strjoin_free(data->door.frame[i], ft_itoa_pad(i, 2), 1);
-		 data->door.frame[i] = ft_strjoin_free(data->door.frame[i], ".xpm", 0);
-	}
-}
-
-void	init_door_frame(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	init_door_frame_tex(data);
-	while (++i < DOOR_FRAME)
-	{
-		ft_printf("Loading door frame: %s\n", data->door.frame[i]);
-		if (access(data->door.frame[i], R_OK) != 0)
-			ft_printf("  → cannot access file: %s\n", strerror(errno));
-		data->d_frame[i].img = mlx_xpm_file_to_image(data->vars.mlx, data->door.frame[i], &data->d_frame[i].x, &data->d_frame[i].y);
-		if (!data->d_frame[i].img)
-		{
-			ft_printf("Error! Failed to initialize door frame IMG\n");
-			close_exit(data);
-		}
-		data->d_frame[i].addr = mlx_get_data_addr(data->d_frame[i].img, &data->d_frame[i].bpp, \
-									 &data->d_frame[i].line_len, &data->d_frame[i].endian);
-		if (!data->d_frame[i].addr)
-		{
-			ft_printf("Error! Failed to initialize door frame Addr\n");
-			close_exit(data);
-		}
-	}
-}
+// void	init_door_frame_tex(t_data *data)
+// {
+// 	int	i;
+//
+// 	i = -1;
+// 	data->door.frame = ft_calloc(DOOR_FRAME + 1, sizeof(char *));
+// 	while (++i < DOOR_FRAME)
+// 	{
+// 		 data->door.frame[i] = ft_strjoin_free(data->door.frame[i], "textures/door_frame/door_", 0);
+// 		 data->door.frame[i] = ft_strjoin_free(data->door.frame[i], ft_itoa_pad(i, 2), 1);
+// 		 data->door.frame[i] = ft_strjoin_free(data->door.frame[i], ".xpm", 0);
+// 	}
+// }
+//
+// void	init_door_frame(t_data *data)
+// {
+// 	int	i;
+//
+// 	i = -1;
+// 	init_door_frame_tex(data);
+// 	while (++i < DOOR_FRAME)
+// 	{
+// 		ft_printf("Loading door frame: %s\n", data->door.frame[i]);
+// 		if (access(data->door.frame[i], R_OK) != 0)
+// 			ft_printf("  → cannot access file: %s\n", strerror(errno));
+// 		data->d_frame[i].img = mlx_xpm_file_to_image(data->vars.mlx, data->door.frame[i], &data->d_frame[i].x, &data->d_frame[i].y);
+// 		if (!data->d_frame[i].img)
+// 		{
+// 			ft_printf("Error! Failed to initialize door frame IMG\n");
+// 			close_exit(data);
+// 		}
+// 		data->d_frame[i].addr = mlx_get_data_addr(data->d_frame[i].img, &data->d_frame[i].bpp, \
+// 									 &data->d_frame[i].line_len, &data->d_frame[i].endian);
+// 		if (!data->d_frame[i].addr)
+// 		{
+// 			ft_printf("Error! Failed to initialize door frame Addr\n");
+// 			close_exit(data);
+// 		}
+// 	}
+// }
 
 
 void	my_pixel_put(t_data *data, int x, int y, int color);
@@ -455,7 +458,7 @@ void	init_doors(t_data *data)
 void	try_toggle_door(t_data *data)
 {
     // Cast a short “test ray” straight forward to see which cell is in front.
-    double test_dist = 0.75;  // half a tile in front
+    double test_dist = 0.75;
     double test_x = data->player.pos_x + data->player.dir_x * test_dist;
     double test_y = data->player.pos_y + data->player.dir_y * test_dist;
 
@@ -486,7 +489,7 @@ void	try_toggle_door(t_data *data)
 
 void	draw_minimap(t_data *data);
 void	draw_player(t_data *data);
-void	else_key(t_data *data);
+void	move_key(t_data *data);
 void	raycasting(t_data *data);
 
 int	reload_win(void *reload)
@@ -496,118 +499,238 @@ int	reload_win(void *reload)
 	data = (t_data *)reload;
 	ft_bzero(data->img.addr, WIDTH * HEIGHT * (data->img.bpp / 8));
 	// load_line(data);
-	else_key(data);
+	move_key(data);
 	// draw_player(data);
 	raycasting(data);	//wip
 	draw_minimap(data);
 	draw_compass(data);
 	mlx_put_image_to_window(data->vars.mlx, data->vars.win, \
 						data->img.img, 0, 0);
-	// if (data->menu.flag)
-	// 	print_menu(data);
-	// else
-	// 	print_smenu(data);
 	return (0);
 }
 
-void	else_key(t_data *data)
+
+int	valid_tile(t_data *data, char tile, int y, int x)
 {
-    const double moveSpeed = 0.1;
-    const double rotSpeed  = 5.0 * M_PI / 180.0;
-    double      newX, newY;
-    double      oldDirX, oldPlaneX;
+	return ((tile == '0'
+			|| tile == 'N' || tile == 'S' || tile == 'W' || tile == 'E')
+			|| (tile == '2'
+			&& data->map.door_open[y][x] == 1));
+}
 
-    if (data->player.key_w)
-    {
-        newX = data->player.pos_x + data->player.dir_x * moveSpeed;
-		newY = data->player.pos_y + data->player.dir_y * moveSpeed;
-		char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
-		if (tileX == '0' || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
-			data->player.pos_x = newX;
+void	w_key(t_data *data)
+{
+	double	new_x;
+	double	new_y;
 
-		char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
-		if (tileY == '0' || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
-			data->player.pos_y = newY;
-	}
+	new_x = data->player.pos_x + data->player.dir_x * MOVESPEED;
+	new_y = data->player.pos_y + data->player.dir_y * MOVESPEED;
+	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x], (int)data->player.pos_y, (int)new_x))
+		data->player.pos_x = new_x;
+	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x], (int)new_y, (int)data->player.pos_x))
+		data->player.pos_y = new_y;
+}
 
-    if (data->player.key_s)
-    {
-        newX = data->player.pos_x - data->player.dir_x * moveSpeed;
-        newY = data->player.pos_y - data->player.dir_y * moveSpeed;
-		char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
-		if (tileX == '0' || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
-			data->player.pos_x = newX;
+void	s_key(t_data *data)
+{
+	double	new_x;
+	double	new_y;
 
-		char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
-		if (tileY == '0' || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
-			data->player.pos_y = newY;
-    }
+	new_x = data->player.pos_x - data->player.dir_x * MOVESPEED;
+	new_y = data->player.pos_y - data->player.dir_y * MOVESPEED;
+	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x], (int)data->player.pos_y, (int)new_x))
+		data->player.pos_x = new_x;
+	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x], (int)new_y, (int)data->player.pos_x))
+		data->player.pos_y = new_y;
+}
 
-    if (data->player.key_a)
-    {
-        newX = data->player.pos_x - data->player.plane_x * moveSpeed;
-        newY = data->player.pos_y - data->player.plane_y * moveSpeed;
-		char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
-		if (tileX == '0' || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
-			data->player.pos_x = newX;
+void	a_key(t_data *data)
+{
+	double	new_x;
+	double	new_y;
 
-		char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
-		if (tileY == '0' || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
-			data->player.pos_y = newY;
-    }
+	new_x = data->player.pos_x - data->player.plane_x * MOVESPEED;
+	new_y = data->player.pos_y - data->player.plane_y * MOVESPEED;
+	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x], (int)data->player.pos_y, (int)new_x))
+		data->player.pos_x = new_x;
+	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x], (int)new_y, (int)data->player.pos_x))
+		data->player.pos_y = new_y;
+}
 
-    if (data->player.key_d)
-    {
-        newX = data->player.pos_x + data->player.plane_x * moveSpeed;
-        newY = data->player.pos_y + data->player.plane_y * moveSpeed;
-		char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
-		if (tileX == '0' || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
-			data->player.pos_x = newX;
+void	d_key(t_data *data)
+{
+	double	new_x;
+	double	new_y;
 
-		char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
-		if (tileY == '0' || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
-			data->player.pos_y = newY;
-    }
+	new_x = data->player.pos_x + data->player.plane_x * MOVESPEED;
+	new_y = data->player.pos_y + data->player.plane_y * MOVESPEED;
+	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x], (int)data->player.pos_y, (int)new_x))
+		data->player.pos_x = new_x;
+	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x], (int)new_y, (int)data->player.pos_x))
+		data->player.pos_y = new_y;
+}
 
-    if (data->player.key_left || data->player.key_right)
-    {
-        oldDirX    = data->player.dir_x;
-        oldPlaneX  = data->player.plane_x;
-        double angle = data->player.key_left ? -rotSpeed : rotSpeed;
+void	lr_key(t_data *data)
+{
+	double	temp_dir_x;
+	double	temp_plane_x;
+	double	angle;
 
-        data->player.dir_x = data->player.dir_x * cos(angle)
-                            - data->player.dir_y * sin(angle);
-        data->player.dir_y = oldDirX * sin(angle)
-                            + data->player.dir_y * cos(angle);
-
-        data->player.plane_x = data->player.plane_x * cos(angle)
-                              - data->player.plane_y * sin(angle);
-        data->player.plane_y = oldPlaneX * sin(angle)
-                              + data->player.plane_y * cos(angle);
-    }
-
-	if (data->player.key_e)
+	temp_dir_x = data->player.dir_x;
+	temp_plane_x = data->player.plane_x;
+	if (data->player.key_left)
 	{
-		// try open door
-		// try_toggle_door(data);
+		angle = -ROTSPEED;
 	}
+	else
+		angle = ROTSPEED;
+	data->player.dir_x = data->player.dir_x * cos(angle)
+		- data->player.dir_y * sin(angle);
+	data->player.dir_y = temp_dir_x * sin(angle)
+		+ data->player.dir_y * cos(angle);
+	data->player.plane_x = data->player.plane_x * cos(angle)
+		- data->player.plane_y * sin(angle);
+	data->player.plane_y = temp_plane_x * sin(angle)
+		+ data->player.plane_y * cos(angle);
 }
 
-int	input_key(int key, t_data *data)
+void	move_key(t_data *data)
 {
-	if (key == XK_Escape || key == XK_q)
-		close_exit(data);
-	// if (data->key.ctrl)
-	// 	ctrl_key(data, key);
-	// else if (data->key.shift)
-	// 	shift_key(data, key);
-	// else if (data->key.alt)
-	// 	alt_key(data, key);
-	// else
-	// 	else_key(data, key);
-	// reload_win(data);
+	if (data->player.key_w)
+		w_key(data);
+	if (data->player.key_s)
+		s_key(data);
+	if (data->player.key_a)
+		a_key(data);
+	if (data->player.key_d)
+		d_key(data);
+	if (data->player.key_left || data->player.key_right)
+		lr_key(data);
+}
+
+void	rotate_player(t_data *data, double angle)
+{
+	double	temp_dir_x;
+	double	temp_plane_x;
+
+	temp_dir_x = data->player.dir_x;
+	temp_plane_x = data->player.plane_x;
+	data->player.dir_x = data->player.dir_x * cos(angle)
+		- data->player.dir_y * sin(angle);
+	data->player.dir_y = temp_dir_x * sin(angle)
+		+ data->player.dir_y * cos(angle);
+	data->player.plane_x = data->player.plane_x * cos(angle)
+		- data->player.plane_y * sin(angle);
+	data->player.plane_y = temp_plane_x * sin(angle)
+		+ data->player.plane_y * cos(angle);
+}
+
+int	key_mouse(int x, int y, t_data *data)
+{
+	double	rot_speed;
+	int		dx;
+
+	(void)y;
+	dx = x - (WIDTH / 2);
+	if (dx != 0)
+	{
+		rot_speed = dx * 0.0003;
+		rotate_player(data, rot_speed);
+		mlx_mouse_move(data->vars.mlx, data->vars.win, WIDTH / 2, HEIGHT / 2);
+	}
 	return (0);
 }
+
+// void	move_key(t_data *data)
+// {
+//     double      newX, newY;
+//     double      oldDirX, oldPlaneX;
+//
+	//    if (data->player.key_w)
+	//    {
+	//        newX = data->player.pos_x + data->player.dir_x * MOVESPEED;
+	// 	newY = data->player.pos_y + data->player.dir_y * MOVESPEED;
+	// 	// char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
+	// 	// if ((tileX == '0' || tileX == 'N' || tileX == 'S' || tileX == 'W' || tileX == 'E') || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
+	// 	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)newX], newX))
+	// 		data->player.pos_x = newX;
+	//
+	// 	// char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
+	// 	// if ((tileY == '0' || tileY == 'N' || tileY == 'S' || tileY == 'W' || tileY == 'E') || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
+	// 	// 	data->player.pos_y = newY;
+	// 	if (valid_tile(data, data->map.maps[(int)newY][(int)data->player.pos_x], newY))
+	// 		data->player.pos_x = newY;
+	// }
+	//
+	//    if (data->player.key_s)
+	//    {
+	//        newX = data->player.pos_x - data->player.dir_x * MOVESPEED;
+	//        newY = data->player.pos_y - data->player.dir_y * MOVESPEED;
+	// 	char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
+	// 	if ((tileX == '0' || tileX == 'N' || tileX == 'S' || tileX == 'W' || tileX == 'E') || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
+	// 		data->player.pos_x = newX;
+	//
+	// 	char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
+	// 	if ((tileY == '0' || tileY == 'N' || tileY == 'S' || tileY == 'W' || tileY == 'E') || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
+	// 		data->player.pos_y = newY;
+	//    }
+	//
+	//    if (data->player.key_a)
+	//    {
+	//        newX = data->player.pos_x - data->player.plane_x * MOVESPEED;
+	//        newY = data->player.pos_y - data->player.plane_y * MOVESPEED;
+	// 	char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
+	// 	if ((tileX == '0' || tileX == 'N' || tileX == 'S' || tileX == 'W' || tileX == 'E') || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
+	// 		data->player.pos_x = newX;
+	//
+	// 	char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
+	// 	if ((tileY == '0' || tileY == 'N' || tileY == 'S' || tileY == 'W' || tileY == 'E') || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
+	// 		data->player.pos_y = newY;
+	//    }
+	//
+	//    if (data->player.key_d)
+	//    {
+	//        newX = data->player.pos_x + data->player.plane_x * MOVESPEED;
+	//        newY = data->player.pos_y + data->player.plane_y * MOVESPEED;
+	// 	char tileX = data->map.maps[(int)data->player.pos_y][(int)newX];
+	// 	if ((tileX == '0' || tileX == 'N' || tileX == 'S' || tileX == 'W' || tileX == 'E') || (tileX == '2' && data->map.door_open[(int)data->player.pos_y][(int)newX] == 1))
+	// 		data->player.pos_x = newX;
+	//
+	// 	char tileY = data->map.maps[(int)newY][(int)data->player.pos_x];
+	// 	if ((tileY == '0' || tileY == 'N' || tileY == 'S' || tileY == 'W' || tileY == 'E') || (tileY == '2' && data->map.door_open[(int)newY][(int)data->player.pos_x] == 1))
+	// 		data->player.pos_y = newY;
+	//    }
+
+	//    if (data->player.key_left || data->player.key_right)
+	//    {
+	//        oldDirX    = data->player.dir_x;
+	//        oldPlaneX  = data->player.plane_x;
+	//        double angle = data->player.key_left ? -rotSpeed : rotSpeed;
+	//
+	//        data->player.dir_x = data->player.dir_x * cos(angle)
+	//                            - data->player.dir_y * sin(angle);
+	//        data->player.dir_y = oldDirX * sin(angle)
+	//                            + data->player.dir_y * cos(angle);
+	//
+	//        data->player.plane_x = data->player.plane_x * cos(angle)
+	//                              - data->player.plane_y * sin(angle);
+	//        data->player.plane_y = oldPlaneX * sin(angle)
+	//                              + data->player.plane_y * cos(angle);
+	//    }
+	//
+	// if (data->player.key_e)
+	// {
+	// 	// try open door
+	// 	// try_toggle_door(data);
+	// }
+// }
+
+// int	input_key(int key, t_data *data)
+// {
+// 	if (key == XK_Escape || key == XK_q)
+// 		close_exit(data);
+// 	return (0);
+// }
 
 int	key_press(int key, t_data *data)
 {
@@ -629,14 +752,7 @@ int	key_press(int key, t_data *data)
 		data->player.key_left = 1;
 	if (key == XK_Right)
 		data->player.key_right = 1;
-
-	// if (key == XK_Control_L || key == XK_Control_R)
-	// 	data->key.ctrl = 1;
-	// if (key == XK_Shift_L || key == XK_Shift_R)
-	// 	data->key.shift = 1;
-	// if (key == XK_Alt_L || key == XK_Alt_R)
-	// 	data->key.alt = 1;
-	input_key(key, data);
+	// input_key(key, data);
 	return (0);
 }
 
@@ -660,12 +776,8 @@ int	key_release(int key, t_data *data)
 		data->player.key_left = 0;
 	if (key == XK_Right)
 		data->player.key_right = 0;
-	// if (key == XK_Control_L || key == XK_Control_R)
-	// 	data->key.ctrl = 0;
-	// if (key == XK_Shift_L || key == XK_Shift_R)
-	// 	data->key.shift = 0;
-	// if (key == XK_Alt_L || key == XK_Alt_R)
-	// 	data->key.alt = 0;
+	if (key == XK_Escape || key == XK_q)
+		close_exit(data);
 	return (0);
 }
 
@@ -685,11 +797,6 @@ void	my_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-// void	draw_img_opaq(t_data *data, int x, int y)
-// {
-//
-// }
-//
 void	draw_minimap_border(t_data *data)
 {
 	int	w;
@@ -843,7 +950,7 @@ void	draw_minimap(t_data *data)
 		{
 			if (data->map.maps[y][x] == '1')
 				color = MM_WALL;
-			else if (data->map.maps[y][x] == '0')
+			else if (data->map.maps[y][x] == '0' || data->map.maps[y][x] == 'N' || data->map.maps[y][x] == 'S' ||data->map.maps[y][x] == 'W' || data->map.maps[y][x] == 'E')
 				color = MM_FLOOR;
 			else if (data->map.maps[y][x] == '2' && !data->map.door_open[y][x])
 				color = MM_DOOR_C;
@@ -943,6 +1050,8 @@ void	init_minimap(t_data *data)
 
 void	init_player(t_data *data)
 {
+
+	// this has to be based on the N,S,W,E symbols on map
 	data->player.pos_x = 14 + 0.5;
 	data->player.pos_y = 7 + 0.5;
 
@@ -1294,34 +1403,6 @@ void	raycasting(t_data *data)
 // ############################################################################
 //								Main
 // ############################################################################
-void	rotate_player(t_data *data, double angle)
-{
-	double old_dir_x = data->player.dir_x;
-	double old_plane_x = data->player.plane_x;
-
-	data->player.dir_x = data->player.dir_x * cos(angle) - data->player.dir_y * sin(angle);
-	data->player.dir_y = old_dir_x * sin(angle) + data->player.dir_y * cos(angle);
-	data->player.plane_x = data->player.plane_x * cos(angle) - data->player.plane_y * sin(angle);
-	data->player.plane_y = old_plane_x * sin(angle) + data->player.plane_y * cos(angle);
-}
-
-int	key_mouse(int x, int y, t_data *data)
-{
-	double		rot_speed;
-
-	(void)y; // not using vertical movement
-
-	int dx = x - (WIDTH / 2);
-	if (dx != 0)
-	{
-		rot_speed = dx * 0.0003; // Adjust this multiplier for sensitivity
-		rotate_player(data, rot_speed);
-		mlx_mouse_move(data->vars.mlx, data->vars.win, WIDTH / 2, HEIGHT / 2);
-	}
-
-	return (0);
-}
-
 int	main(int ac, char **av)
 {
 	(void)ac;
@@ -1333,7 +1414,7 @@ int	main(int ac, char **av)
 	init_mlx(&data);
 	init_tex(&data);
 	init_compass_frame(&data);
-	init_door_frame(&data);
+	// init_door_frame(&data);
 	init_player(&data);
 	init_minimap(&data);
 	init_doors(&data);

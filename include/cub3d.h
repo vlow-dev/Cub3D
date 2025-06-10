@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/07 18:19:25 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/10 19:24:29 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@
 # define MM_PLAYER   0x00FF0000
 # define MM_VIEW     0x0000FF00
 # define MM_BORDER   0x00FFFFFF
+
+// player
+# define MOVESPEED	0.1
+# define ROTSPEED	5.0 * M_PI / 180.0;
 
 typedef struct s_vars
 {
@@ -138,7 +142,8 @@ typedef struct s_player
 	int		key_left;
 	int		key_right;
 	int		key_e;
-
+	// double	moveSpeed;
+	// double	rotSpeed;
 }	t_player;
 
 typedef struct s_ray

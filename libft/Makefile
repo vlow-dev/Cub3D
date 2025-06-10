@@ -133,7 +133,7 @@ SRC = \
 OBJ = $(SRC:%.c=%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -o3
 IFLAGS = -I$(INC_DIR)
 AR = ar
 ARFLAGS = rcs
