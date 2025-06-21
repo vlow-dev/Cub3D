@@ -208,4 +208,41 @@ typedef struct s_data
 	double delta_time;
 }	t_data;
 
+//drawing
+void	my_pixel_put(t_data *data, int x, int y, int color);
+void	draw_compass(t_data *data);
+void	init_minimap(t_data *data);
+void	init_doors(t_data *data);
+void	init_tex(t_data *data);
+void	init_compass_frame(t_data *data);
+void	init_player(t_data *data);
+void	draw_minimap(t_data *data);
+void	raycasting(t_data *data);
+void	draw_minimap_circle_border(t_data *data);
+void	minimap_center_player(t_data *data);
+void	draw_minimap_player(t_data *data);
+
+// raycasting
+void	ray_tex_init(t_data *data);
+void	ray_tex_door(t_data *data, int side);
+void	ray_tex_sides(t_data *data, int side);
+void	ray_tex_draw(t_data *data, int ray);
+
+//cleanup
+int		close_exit(t_data *data);
+
+//controls
+int		key_press(int key, t_data *data);
+int		key_release(int key, t_data *data);
+int		key_mouse(int x, int y, t_data *data);
+int		reload_win(void *reload);
+void	lr_key(t_data *data);
+void	d_key(t_data *data);
+void	a_key(t_data *data);
+void	s_key(t_data *data);
+void	w_key(t_data *data);
+void	move_key(t_data *data);
+int		valid_tile(t_data *data, char tile, int y, int x);
+void	try_toggle_door(t_data *data);
+
 #endif
