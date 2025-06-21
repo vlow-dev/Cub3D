@@ -120,13 +120,13 @@ int extract_info(t_map **map, char **raw_file)
     if (!raw_file[line_idx])
       return (-1);
     if (ft_strncmp("NO", raw_file[line_idx], 2) == 0)
-      (*map)->no = get_path_direction(raw_file[line_idx]);
+      (*map)->tex[TEX_NO] = get_path_direction(raw_file[line_idx]);
     else if (ft_strncmp("SO", raw_file[line_idx], 2) == 0)
-      (*map)->so = get_path_direction(raw_file[line_idx]);
+      (*map)->tex[TEX_SO] = get_path_direction(raw_file[line_idx]);
     else if (ft_strncmp("WE", raw_file[line_idx], 2) == 0)
-      (*map)->we = get_path_direction(raw_file[line_idx]);
+      (*map)->tex[TEX_WE] = get_path_direction(raw_file[line_idx]);
     else if (ft_strncmp("EA", raw_file[line_idx], 2) == 0)
-      (*map)->ea = get_path_direction(raw_file[line_idx]);
+      (*map)->tex[TEX_EA] = get_path_direction(raw_file[line_idx]);
     else if (raw_file[line_idx][0] == 'F')
       (*map)->floor = get_colours(raw_file[line_idx]);
     else if (raw_file[line_idx][0] == 'C')
@@ -204,10 +204,10 @@ int main()
     return (0);
   }
 
-  printf("%s\n", y->ea);
-  printf("%s\n", y->so);
-  printf("%s\n", y->no);
-  printf("%s\n", y->we);
+  printf("%s\n", y->tex[TEX_EA]);
+  printf("%s\n", y->tex[TEX_NO]);
+  printf("%s\n", y->tex[TEX_SO]);
+  printf("%s\n", y->tex[TEX_WE]);
   printf("%i\n", y->floor);
   printf("%i\n", y->ceiling);
   for (int i = 0; i < y->y_size; i++)
