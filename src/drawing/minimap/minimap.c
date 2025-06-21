@@ -89,6 +89,7 @@ void	draw_minimap(t_data *data)
 	}
 	draw_minimap_circle_border(data);
 	draw_minimap_player(data);
+	free(matrix);
 }
 
 void	init_minimap(t_data *data)
