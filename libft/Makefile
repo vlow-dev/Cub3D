@@ -67,6 +67,7 @@ SRC = \
 	$(NUMBER_DIR)/ft_countdigits_hex.c \
 	$(NUMBER_DIR)/ft_countdigits_u.c \
 	$(NUMBER_DIR)/ft_itoa.c \
+	$(NUMBER_DIR)/ft_itoa_pad.c \
 	$(NUMBER_DIR)/ft_itoa_hex.c \
 	$(NUMBER_DIR)/ft_itoa_u.c \
 	$(NUMBER_DIR)/ft_strtol.c \
@@ -132,7 +133,7 @@ SRC = \
 OBJ = $(SRC:%.c=%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -o3
 IFLAGS = -I$(INC_DIR)
 AR = ar
 ARFLAGS = rcs

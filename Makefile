@@ -7,7 +7,7 @@ LIBFT_DIR = libft
 ## MLX
 MLX_DIR = minilibx-linux
 LIB_MLX = $(MLX_DIR)/libmlx_Linux.a
-1X_FLAGS = -lXext -lX11 -lm -lz
+1X_FLAGS = -lXext -lX11 -lm -lz## -lXpm
 
 SRC = $(wildcard $(SRC_DIR)/*.c)
 
@@ -15,7 +15,7 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 TEST = src/parsing.c
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -o3
 IFLAGS = -I$(INC_DIR) -I$(LIBFT_DIR)/$(INC_DIR) -I$(MLX_DIR)
 LFLAGS = -l$(LIBFT_DIR)/libft.a
 LIBFT = $(LIBFT_DIR)/libft.a

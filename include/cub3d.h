@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/04/29 16:14:10 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/10 19:24:29 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,62 @@
 // Window size
 # define WIDTH 1920
 # define HEIGHT 1080
-# define TEX_SIZE 64
-# define MMAP_SIZE 32
+# define TEX_SIZE 5
+# define MMAP_SIZE 0.4
+# define MMAP_RADIUS 125
+# define MMAP_MARGIN 10
+# define TEX_NO 0
+# define TEX_SO 1
+# define TEX_WE 2
+# define TEX_EA 3
+# define TEX_DO 4
+# define COMPASS_FRAME 29
+# define DOOR_FRAME 92
+# define FRAME_SCALE 2
 
-//color
-# define RED	0x00FF0000
-# define ORANGE	0x00FFA500
-# define YELLOW	0x00FFFF00
-# define GREEN	0x0000FF00
-# define CYAN	0x0000FFFF
-# define BLUE	0x000000FF
-# define PURPLE	0x00800080
-# define WHITE	0x00FFFFFF
-# define BLACK	0x00000000
-# define GREY	0x80808080
-# define M_CYAN	0x0066FFFF
-# define T_GREY	0x00CCCCCC
-# define N_ORGE	0x00FFA07A
+/* === SOLID COLORS === */
+# define RED        0x00FF0000
+# define ORANGE     0x00FFA500
+# define YELLOW     0x00FFFF00
+# define GREEN      0x0000FF00
+# define SEMI_GREEN 0x00BFFFBF
+# define CYAN       0x0000FFFF
+# define BLUE       0x000000FF
+# define PURPLE     0x00800080
+# define WHITE      0x00FFFFFF
+# define BLACK      0x00000000
+# define GREY       0x80808080
+# define T_GREY     0x00CCCCCC
+# define M_CYAN     0x0066FFFF
+# define N_ORGE     0x00FFA07A
 # define HIGH_COLOUR	RED
 # define LOW_COLOUR		BLUE
 # define TEXT_COLOR		T_GREY
 # define MENU_COLOR		M_CYAN
 # define NB_COLOR		N_ORGE
-# define P_FRONT 1
-# define P_BACK 2
-# define P_LEFT 3
-# define P_RIGHT 4
-# define P_TOP 5
-# define P_BOTTOM 6
+
+/* === WALLS & STRUCTURES === */
+# define D_WOOD     0x00654321
+# define L_WOOD     0x00DEB887
+# define T_WOOD     0x00A0522D
+
+/* === FLOORS & CEILINGS === */
+# define FLOOR      0x00C2B280
+# define STONE      0x00A9A9A9
+# define CEILING    0x00FFF8DC
+
+/* === MINIMAP COLORS === */
+# define MM_WALL     0x00404040
+# define MM_FLOOR    0x00AAAAAA
+# define MM_DOOR_C   0x00654321
+# define MM_DOOR_O   0x00FFD700
+# define MM_PLAYER   0x00FF0000
+# define MM_VIEW     0x0000FF00
+# define MM_BORDER   0x00FFFFFF
+
+// player
+# define MOVESPEED	0.1
+# define ROTSPEED	5.0 * M_PI / 180.0;
 
 typedef struct s_vars
 {
@@ -58,19 +86,43 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		x;
+	int		y;
 }	t_img;
 
 typedef struct s_map
 {
 	char				**maps;
-	char				*no;
-	char				*so;
-	char				*we;
-	char				*ea;
+	// char				*no;
+	// char				*so;
+	// char				*we;
+	// char				*ea;
+	char				*tex[TEX_SIZE];
 	unsigned int		floor;
 	unsigned int		ceiling;
 	int					y_size;
+	int					x_size;
+	int					**door_open;
 }	t_map;
+
+typedef struct s_ani
+{
+	char	**frame;
+	int		idx;
+}	t_ani;
+
+typedef struct s_minimap
+{
+	double		scale_x;
+	double		scale_y;
+	double		scale;
+	double		zoom_factor;
+	int			z_scale;
+	double		p_x;
+	double		p_y;
+	double		p_ox;
+	double		p_oy;
+}	t_minimap;
 
 typedef struct s_player
 {
@@ -85,27 +137,75 @@ typedef struct s_player
 	int		key_a;
 	int		key_s;
 	int		key_d;
-
+	int		key_up;
+	int		key_down;
+	int		key_left;
+	int		key_right;
+	int		key_e;
+	// double	moveSpeed;
+	// double	rotSpeed;
 }	t_player;
 
 typedef struct s_ray
 {
-	int	count;
-	int	dof;
-	float	x;
-	float	y;
-	float	angle;
-	float	ox;
-	float	oy;
+	// int	count;
+	// int	dof;
+	int		tile_x;
+	int		tile_y;
+	double	cam_x;
+	double	x;
+	double	y;
+	// double	angle;
+	// double	ox;
+	// double	oy;
+	double	dist_x;
+	double	dist_y;
+	double	side_x;
+	double	side_y;
+	double	len_x;
+	double	len_y;
+	double	perpDist;
+	int		door;
+	// double	door_state[];
 }	t_ray;
+
+typedef struct s_draw
+{
+	int		height;
+	int		start;
+	int		end;
+	int		tex_side;
+	int		tex_x;
+	double	wall_x;
+
+}	t_draw;
+
+typedef struct s_time
+{
+	int		fps_count;
+	int		fps;
+	double	st_time;
+	
+}	t_time;
 
 typedef struct s_data
 {
 	t_vars	vars;
 	t_img	img;
+	t_img	tex[TEX_SIZE];
+	t_ani	compass;
+	t_ani	door;
+	t_img	c_frame[COMPASS_FRAME];
+	t_img	d_frame[DOOR_FRAME];
 	t_map	map;
+	t_minimap	mini;
 	t_player	player;
 	t_ray		ray;
+	t_draw		draw;
+
+
+	int last_time_ms;
+	double delta_time;
 }	t_data;
 
 #endif

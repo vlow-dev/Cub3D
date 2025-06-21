@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 01:38:33 by vlow              #+#    #+#             */
-/*   Updated: 2025/04/17 01:40:06 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/04 16:46:43 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int			ft_countdigits(long int n);
 int			ft_countdigits_u(unsigned long int n);
 int			ft_countdigits_hex(unsigned long int n);
 char		*ft_itoa(int n);
+char		*ft_itoa_pad(int n, int pad);
 char		*ft_itoa_u(unsigned long int n);
 char		*ft_itoa_hex(unsigned long int n);
 char		*ft_ltoa(long int n);
@@ -167,7 +168,7 @@ int			fl_sp_p_fd(int fd, va_list vlist, t_flags *flags);
 int			fl_sp_x_fd(int fd, va_list vlist, t_flags *flags);
 
 // utils
-int			split_free(char **str);
+int			split_free(void **str);
 void		split_print(char **str);
 int			ft_split_size(char **arr);
 char		**ft_split_append(char **s1, char *str);

@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 23:33:51 by vlow              #+#    #+#             */
-/*   Updated: 2025/04/10 16:00:00 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/01 16:55:03 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ char	**split_free_join(char **arr1, char **arr2, int flag)
 		if (!arr1)
 		{
 			if (flag)
-				split_free(arr2);
+				split_free((void **)arr2);
 			return (NULL);
 		}
 		ft_memset(arr1, 0, sizeof(char *));
 	}
 	if (!arr2)
-		return (split_free(arr1), NULL);
+		return (split_free((void **)arr1), NULL);
 	temp = ft_split_join(arr1, arr2);
-	split_free(arr1);
+	split_free((void **)arr1);
 	if (flag)
-		split_free(arr2);
+		split_free((void **)arr2);
 	return (temp);
 }
 
@@ -70,7 +70,7 @@ static int	join_s1(char **temp, char **s1, int *idx)
 		temp[i] = ft_strdup(s1[i]);
 		if (!temp[i])
 		{
-			split_free(temp);
+			split_free((void **)temp);
 			return (0);
 		}
 		i++;
@@ -91,7 +91,7 @@ static int	join_s2(char **temp, char **s2, int i)
 		temp[i] = ft_strdup(s2[j]);
 		if (!temp[i])
 		{
-			split_free(temp);
+			split_free((void **)temp);
 			return (0);
 		}
 		i++;
