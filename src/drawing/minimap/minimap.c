@@ -3,6 +3,8 @@
 #include <X11/keysym.h>
 #include <X11/X.h>
 #include <math.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 static void	actual_draw(t_data *data, int **matrix, unsigned int *color)
@@ -37,7 +39,7 @@ static int	assign_color(t_data *data, int **matrix, unsigned int *color)
 
 static void	draw_logic(t_data *data, int **matrix, unsigned int *color)
 {
-	if (assign_color(data, matrix, color))
+	if (assign_color(data, &(*matrix), color))
 		return ;
 	(*matrix)[3] = -1;
 	while (++(*matrix)[3] < data->mini.z_scale)
@@ -71,9 +73,10 @@ static void	draw_logic(t_data *data, int **matrix, unsigned int *color)
 // int ddy; 8
 void	draw_minimap(t_data *data)
 {
-	int				matrix[9];
+	int				*matrix;
 	unsigned int	color;
 
+	matrix = malloc(sizeof(int)* 9);
 	color = WHITE;
 	minimap_center_player(data);
 	matrix[1] = -1;

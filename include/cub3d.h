@@ -245,4 +245,8 @@ void	move_key(t_data *data);
 int		valid_tile(t_data *data, char tile, int y, int x);
 void	try_toggle_door(t_data *data);
 
+// for testing
+void	test_map(t_data *data);
+void	init_mlx(t_data *data);
+
 #endif

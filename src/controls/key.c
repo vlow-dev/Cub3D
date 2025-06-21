@@ -73,7 +73,9 @@ void	lr_key(t_data *data)
 	temp_dir_x = data->player.dir_x;
 	temp_plane_x = data->player.plane_x;
 	if (data->player.key_left)
+	{
 		angle = -ROTSPEED;
+	}
 	else
 		angle = ROTSPEED;
 	data->player.dir_x = data->player.dir_x * cos(angle)
