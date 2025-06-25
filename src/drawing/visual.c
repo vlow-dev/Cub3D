@@ -84,19 +84,40 @@ void	init_player(t_data *data)
 	data->player.pos_x = 14 + 0.5;
 	data->player.pos_y = 7 + 0.5;
 
-	// data->player.pos_x = (double)ft_strlen(data->map.maps[data->map.y_size / 2]) / 2.0 + 0.5;
-	// data->player.pos_y = (double)data->map.y_size / 2.0 + 0.5;
-	// printf("data->player.pos_x = %f\n", data->player.pos_x);
-	// printf("data->player.pos_y = %f\n", data->player.pos_y);
-	
-	// player dir will need to be initialize based on map later on;
-	// data->player.angle = 270.0;
-	// data->player.dir_x = cos(data->player.angle * M_PI / 180.0);
-	// data->player.dir_y = sin(data->player.angle * M_PI / 180.0);
-	
 	data->player.dir_x = 0;
 	data->player.dir_y = -1;
 	data->player.plane_x = 0.66;
 	data->player.plane_y = 0;
+
+	// pSide = data->map.maps[y][x];
+	//
+	// if (pSide == 'N')
+	// {
+	// 	data->player.dir_x = 0;
+	// 	data->player.dir_y = -1;
+	// 	data->player.plane_x = 0.66;
+	// 	data->player.plane_y = 0;
+	// }
+	// else if (pSide == 'S')
+	// {
+	// 	data->player.dir_x = 0;
+	// 	data->player.dir_y = 1;
+	// 	data->player.plane_x = -0.66;
+	// 	data->player.plane_y = 0;
+	// }
+	// else if (pSide == 'W')
+	// {
+	// 	data->player.dir_x = -1;
+	// 	data->player.dir_y = 0;
+	// 	data->player.plane_x = 0;
+	// 	data->player.plane_y = -0.66;
+	// }
+	// else if (pSide == 'E')
+	// {
+	// 	data->player.dir_x = 1;
+	// 	data->player.dir_y = 0;
+	// 	data->player.plane_x = 0;
+	// 	data->player.plane_y = 0.66;
+	// }
 }
 

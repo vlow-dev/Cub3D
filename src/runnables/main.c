@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:30:32 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/10 19:57:25 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/25 15:14:31 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	test_map(t_data *data)
 	data->map.tex[TEX_SO] = ft_strdup("textures/wood.xpm");
 	data->map.tex[TEX_WE] = ft_strdup("textures/wood.xpm");
 	data->map.tex[TEX_EA] = ft_strdup("textures/wood.xpm");
-	data->map.tex[TEX_DO] = ft_strdup("textures/door_frame/door_00.xpm");
+	data->map.tex[TEX_DO] = ft_strdup("textures/wood_door.xpm");
 	// data->compass.frame[0] = ft_strdup("textures/compass_frame/compass_00.xpm");
 	// data->compass.frame[1] = ft_strdup("textures/compass_frame/compass_01.xpm");
 	// data->compass.frame[2] = ft_strdup("textures/compass_frame/compass_02.xpm");

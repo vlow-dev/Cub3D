@@ -24,7 +24,7 @@ static char	**extract_file(char *file_path)
 	char	**ret;
 	t_list	*itr;
 
-	fd[0] = open(file_path, O_RDONLY);
+	fd[0] = open(file_path, O_RDONLY); // need fail open checks
 	tmp = get_next_line(fd[0]);
 	lines = ft_lstnew(ft_strdup(tmp));
 	get_lines(&lines, &tmp, fd[0]);

@@ -1,24 +1,52 @@
 #include "../../libft/include/libft.h"
 #include "../../include/cub3d.h"
 #include "../../minilibx-linux/mlx.h"
+#include "parsing.h"
 #include <X11/keysym.h>
 #include <X11/X.h>
 #include <sys/time.h>
+#include "stdlib.h"
 
-int	main(int argc, char **argv)
+int	parse_map(t_data *data, char* av)
 {
-	(void)argc;
-	(void)argv;
+	t_result *res;
+
+	res = parse_file(av);
+	if (res->result == ERROR)
+	{
+		ft_printf_fd(2, "%s\n", res->data.err);
+		free(res->data.err);
+		return (0);
+	}
+	data->map = *(res->data.map);
+	free(res->data.map);
+	return (1);
+}
+
+void inits_modules(t_data *data)
+{
+	init_mlx(data);
+	init_tex(data);
+	init_compass_frame(data);
+	init_player(data);
+	init_minimap(data);
+	init_doors(data);
+}
+
+int	main(int ac, char **av)
+{
 	t_data data;
 	
 	ft_memset(&data, 0, sizeof(t_data));
-	test_map(&data);
-	init_mlx(&data);
-	init_tex(&data);
-	init_compass_frame(&data);
-	init_player(&data);
-	init_minimap(&data);
-	init_doors(&data);
+	if (ac != 2)
+	{
+		ft_printf_fd(2, "Syntax Error! usage: ./cub3d <path/to/map.cub\n");
+		return (1);
+	}
+	if (!parse_map(&data, av[1]))
+		return (1);
+	// test_map(&data);
+	inits_modules(&data);
 	mlx_put_image_to_window(data.vars.mlx, data.vars.win, data.img.img, 0, 0);
 	mlx_hook(data.vars.win, KeyPress, KeyPressMask, key_press, &data);
 	mlx_hook(data.vars.win, KeyRelease, KeyReleaseMask, key_release, &data);

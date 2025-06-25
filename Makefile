@@ -11,14 +11,15 @@ LIB_MLX = $(MLX_DIR)/libmlx_Linux.a
 
 # SRC = $(wildcard $(SRC_DIR)/*/*/*/*.c)
 # src/parsing/example_c
-SRC = src/controls/control.c src/controls/key.c src/controls/mouse.c src/drawing/door.c \
-src/drawing/draw.c src/drawing/visual.c src/drawing/minimap/border.c src/drawing/minimap/minimap.c \
-src/drawing/minimap/player.c src/drawing/ray/ray.c src/drawing/ray/textures.c src/parsing/file_handling.c \
-src/parsing/result.c src/parsing/utils.c src/runnables/cub3d.c src/runnables/main.c
+SRC = \
+	src/controls/control.c src/controls/key.c src/controls/mouse.c src/drawing/door.c \
+	src/drawing/draw.c src/drawing/visual.c src/drawing/minimap/border.c src/drawing/minimap/minimap.c \
+	src/drawing/minimap/player.c src/drawing/ray/ray.c src/drawing/ray/textures.c src/parsing/file_handling.c \
+	src/parsing/result.c src/parsing/utils.c src/runnables/cub3d.c src/runnables/main.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 TEST = src/parsing.c
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -o3
 IFLAGS = -I$(INC_DIR) -I$(LIBFT_DIR)/$(INC_DIR) -I$(MLX_DIR)
 LFLAGS = -l$(LIBFT_DIR)/libft.a

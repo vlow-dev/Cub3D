@@ -11,6 +11,7 @@ t_result	*result_error(char *str)
 	res = malloc(sizeof(t_result));
 	res->result = ERROR;
 	res->data.err = ft_strdup(str);
+	res->data.map = NULL;
 	return (res);
 }
 
@@ -21,5 +22,6 @@ t_result	*result_ok(t_map *map)
 	res = malloc(sizeof(t_result));
 	res->result = OK;
 	res->data.map = map;
+	res->data.err = NULL;
 	return (res);
 }
