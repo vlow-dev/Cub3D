@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:34 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:27:35 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:28:29 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,31 @@ t_result	*result_error(char *str)
 	t_result	*res;
 
 	res = malloc(sizeof(t_result));
+	if (!res)
+		return (NULL); // and freeee
+	ft_memset(res, 0, sizeof(t_result));
 	res->result = ERROR;
 	res->data.err = ft_strdup(str);
-	res->data.map = NULL;
+	if (!res->data.err)
+		return (free(res), NULL);
 	return (res);
 }
 
-t_result	*result_ok(t_map *map)
+t_result	*result_ok(t_map **map)
 {
 	t_result	*res;
 
 	res = malloc(sizeof(t_result));
+	if (!res)
+	{
+		for (int i = 0; i < TEX_SIZE; i++)
+		{
+			free((*map)->tex[i]);
+		}
+		return (split_free((void **)(*map)->maps), NULL); // and freeee
+	}
+	ft_memset(res, 0, sizeof(t_result));
 	res->result = OK;
-	res->data.map = map;
-	res->data.err = NULL;
+	res->data.map = *map;
 	return (res);
 }

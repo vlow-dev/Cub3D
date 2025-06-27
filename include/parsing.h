@@ -22,7 +22,7 @@ typedef struct	s_result
 
 // result union for error handling
 t_result  *result_error(char *str);
-t_result  *result_ok(t_map *map);
+t_result  *result_ok(t_map **map);
 
 // utility functions for handling file parsing. 
 char	  *unwhite(char *line);

@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:31 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 14:14:01 by vlow             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:30:52 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	extract_info(t_map **map, char **raw_file)
 	if (!raw_file)
 		return (-1);
 	line_idx = 0;
-	split_print(raw_file);
+	// split_print(raw_file);
 	while (raw_file[line_idx] && raw_file[line_idx][0] != '1')
 	{
 		if (ft_strncmp("NO", raw_file[line_idx], 2) == 0)
@@ -97,6 +97,8 @@ static int	extract_info(t_map **map, char **raw_file)
 			(*map)->tex[TEX_WE] = get_path_direction(raw_file[line_idx]);
 		else if (ft_strncmp("EA", raw_file[line_idx], 2) == 0)
 			(*map)->tex[TEX_EA] = get_path_direction(raw_file[line_idx]);
+		else if (ft_strncmp("DO", raw_file[line_idx], 2) == 0)
+			(*map)->tex[TEX_DO] = get_path_direction(raw_file[line_idx]);
 		else if (raw_file[line_idx][0] == 'F')
 		{
 			(*map)->floor = get_colours(raw_file[line_idx]);
@@ -124,18 +126,27 @@ static t_result	*handle_map(t_map **map, char **raw_file, int line_idx)
 
 	if (line_idx == -1)
 		return (result_error("invalid .cub file."));
+	line_idx += 2;
 	size = line_idx;
+	// ft_printf("line_idx = [%d]\n", size);
 	while (raw_file[size])
 		size++;
+	// ft_printf("size = [%d]\n", size);
 	(*map)->y_size = (size - line_idx);
+	// ft_printf("(*map)->y_size = [%d]\n", (*map)->y_size);
 	(*map)->maps = malloc(sizeof(char *) * ((*map)->y_size + 1));
 	if (!(*map)->maps)
 		return (result_error("malloc failed"));
 	size = 0;
 	while (raw_file[line_idx])
+	{
+		if ((int)ft_strlen(raw_file[line_idx]) > (*map)->x_size)
+			(*map)->x_size = ft_strlen(raw_file[line_idx]);
 		(*map)->maps[size++] = ft_strdup(raw_file[line_idx++]);
+	}
 	(*map)->maps[size] = NULL;
-	return (result_ok(*map));
+	// split_print((*map)->maps);
+	return (result_ok(map));
 }
 
 t_result	*parse_file(char *file_path)
@@ -149,18 +160,20 @@ t_result	*parse_file(char *file_path)
 	if (ft_strlen(file_path) <= 4
 		|| ft_strncmp(".cub", &file_path[leng - 4], 4))
 		return (result_error("file provided is not a .cub file"));
-	res = malloc(sizeof(t_result));
-	if (!res)
-		return (result_error("malloc failed"));
+	// res = malloc(sizeof(t_result));
+	// if (!res)
+	// 	return (result_error("malloc failed"));
 	map = malloc(sizeof(t_map));
 	if (!map)
-		return (free(res), result_error("malloc failed"));
-	ft_memset(res, 0, sizeof(t_result));
+		return (result_error("malloc failed"));
+		// return (free(res), result_error("malloc failed"));
+	// ft_memset(res, 0, sizeof(t_result));
 	ft_memset(map, 0, sizeof(t_map));
 	raw_file = extract_file(file_path);
 	if (!raw_file)
 		return (result_error("invalid file format provide"));
 	// extract_info(&map, raw_file);
 	res = handle_map(&map, raw_file, extract_info(&map, raw_file));
+	split_free((void **)raw_file);
 	return (res);
 }
