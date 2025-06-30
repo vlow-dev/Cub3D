@@ -97,3 +97,15 @@ int	get_colours(char *line)
 	free(clean);
 	return (i);
 }
+
+int	safe_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+    if (!str)
+		return (i);
+	while (str[i])
+		i++;
+	return (i);
+}

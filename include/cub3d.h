@@ -90,6 +90,13 @@ typedef struct s_img
 	int		y;
 }	t_img;
 
+typedef struct s_player_pos
+{
+	int		x;
+	int		y;
+	char	dir;
+}	t_player_pos;
+
 typedef struct s_map
 {
 	char				**maps;
@@ -103,6 +110,7 @@ typedef struct s_map
 	int					y_size;
 	int					x_size;
 	int					**door_open;
+	t_player_pos		*pp;
 }	t_map;
 
 typedef struct s_ani

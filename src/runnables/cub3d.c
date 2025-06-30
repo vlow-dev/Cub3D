@@ -23,7 +23,7 @@ int	parse_map(t_data *data, char* av)
 {
 	t_result *res;
 
-	res = parse_file(av);
+	res = get_map(av);
 	if (res->result == ERROR)
 	{
 		ft_printf_fd(2, "%s\n", res->data.err);

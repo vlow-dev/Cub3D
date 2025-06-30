@@ -15,7 +15,9 @@ SRC = \
 	src/controls/control.c src/controls/key.c src/controls/mouse.c src/drawing/door.c \
 	src/drawing/draw.c src/drawing/visual.c src/drawing/minimap/border.c src/drawing/minimap/minimap.c \
 	src/drawing/minimap/player.c src/drawing/ray/ray.c src/drawing/ray/textures.c src/parsing/file_handling.c \
-	src/parsing/result.c src/parsing/utils.c src/runnables/cub3d.c src/runnables/main.c
+	src/parsing/result.c src/parsing/utils.c src/runnables/cub3d.c src/runnables/main.c \
+	src/parsing/map_validation.c src/parsing/validation_utils.c \
+	src/parsing/get_map.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 TEST = src/parsing.c
 
