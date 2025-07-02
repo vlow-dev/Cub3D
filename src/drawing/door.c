@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:19 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:27:20 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/02 01:47:24 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	try_toggle_door(t_data *data)
 	matrix = cell_player_matrix(test_x, test_y, data);
 	if (matrix[0] == matrix[2] && matrix[1] == matrix[3])
 		return ;
-	if (data->map.maps[matrix[3]][matrix[2]] == '2')
+	if (data->map.maps[matrix[1]][matrix[0]] == '2')
 	{
-		data->map.door_open[matrix[3]][matrix[2]]
-			= !data->map.door_open[matrix[3]][matrix[2]];
+		data->map.door_open[matrix[1]][matrix[0]]
+			= !data->map.door_open[matrix[1]][matrix[0]];
 	}
 }

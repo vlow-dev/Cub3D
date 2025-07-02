@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:40 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:26:41 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/02 14:09:19 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	key_mouse(int x, int y, t_data *data)
 	dx = x - (WIDTH / 2);
 	if (dx != 0)
 	{
-		rot_speed = dx * 0.0003;
+		rot_speed = dx * MOUSESENS;
 		rotate_player(data, rot_speed);
 		mlx_mouse_move(data->vars.mlx, data->vars.win, WIDTH / 2, HEIGHT / 2);
 	}

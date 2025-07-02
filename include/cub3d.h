@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/25 14:46:34 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/02 14:26:28 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@
 # define MM_BORDER   0x00FFFFFF
 
 // player
-# define MOVESPEED	0.1
-# define ROTSPEED	5.0 * M_PI / 180.0;
+# define MOUSESENS	0.0003
+# define MOVESPEED	1.0
+# define ROTSPEED	(180.0 * M_PI / 180.0)
+# define ANISPEED	0.1
 
 typedef struct s_vars
 {
@@ -90,6 +92,13 @@ typedef struct s_img
 	int		y;
 }	t_img;
 
+typedef struct s_player_pos
+{
+	int		x;
+	int		y;
+	char	dir;
+}	t_player_pos;
+
 typedef struct s_map
 {
 	char				**maps;
@@ -103,12 +112,14 @@ typedef struct s_map
 	int					y_size;
 	int					x_size;
 	int					**door_open;
+	t_player_pos		*pp;
 }	t_map;
 
 typedef struct s_ani
 {
 	char	**frame;
 	int		idx;
+	double	timer;
 }	t_ani;
 
 typedef struct s_minimap
@@ -182,10 +193,12 @@ typedef struct s_draw
 
 typedef struct s_time
 {
-	int		fps_count;
-	int		fps;
-	double	st_time;
-	
+	int	fps_count;
+	int	fps;
+	long	st_time;
+	long	cur_time_ms;
+	long	last_time_ms;
+	double	delta_time;
 }	t_time;
 
 typedef struct s_data
@@ -204,8 +217,7 @@ typedef struct s_data
 	t_draw		draw;
 
 
-	int last_time_ms;
-	double delta_time;
+	t_time time;
 }	t_data;
 
 //drawing

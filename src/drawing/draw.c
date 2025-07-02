@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:27:23 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/02 02:52:59 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,15 @@ void	draw_compass(t_data *data)
 	int		y;
 	t_img	*frame;
 
+	data->compass.timer += data->time.delta_time;
+	if (data->compass.timer >= ANISPEED)
+	{
+		data->compass.idx = (data->compass.idx + 1) % COMPASS_FRAME;
+		data->compass.timer = 0;
+	}
+
 	frame = &data->c_frame[data->compass.idx];
 	x = WIDTH - frame->x - 10;
 	y = HEIGHT - frame->y - 10;
 	draw_image_trans(data, frame, x, y);
-	data->compass.idx = (data->compass.idx + 1) % COMPASS_FRAME;
 }

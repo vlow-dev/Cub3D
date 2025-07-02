@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:33 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:26:34 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/02 14:27:43 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	w_key(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x + data->player.dir_x * MOVESPEED;
-	new_y = data->player.pos_y + data->player.dir_y * MOVESPEED;
+	new_x = data->player.pos_x + data->player.dir_x * MOVESPEED * data->time.delta_time;
+	new_y = data->player.pos_y + data->player.dir_y * MOVESPEED * data->time.delta_time;
 	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
 		(int)data->player.pos_y, (int)new_x))
 		data->player.pos_x = new_x;
@@ -36,8 +36,8 @@ void	s_key(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x - data->player.dir_x * MOVESPEED;
-	new_y = data->player.pos_y - data->player.dir_y * MOVESPEED;
+	new_x = data->player.pos_x - data->player.dir_x * MOVESPEED * data->time.delta_time;
+	new_y = data->player.pos_y - data->player.dir_y * MOVESPEED * data->time.delta_time;
 	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
 		(int)data->player.pos_y, (int)new_x))
 		data->player.pos_x = new_x;
@@ -51,8 +51,8 @@ void	a_key(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x - data->player.plane_x * MOVESPEED;
-	new_y = data->player.pos_y - data->player.plane_y * MOVESPEED;
+	new_x = data->player.pos_x - data->player.plane_x * MOVESPEED * data->time.delta_time;
+	new_y = data->player.pos_y - data->player.plane_y * MOVESPEED * data->time.delta_time;
 	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
 		(int)data->player.pos_y, (int)new_x))
 		data->player.pos_x = new_x;
@@ -66,8 +66,8 @@ void	d_key(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x + data->player.plane_x * MOVESPEED;
-	new_y = data->player.pos_y + data->player.plane_y * MOVESPEED;
+	new_x = data->player.pos_x + data->player.plane_x * MOVESPEED * data->time.delta_time;
+	new_y = data->player.pos_y + data->player.plane_y * MOVESPEED * data->time.delta_time;
 	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
 		(int)data->player.pos_y, (int)new_x))
 		data->player.pos_x = new_x;
@@ -86,10 +86,10 @@ void	lr_key(t_data *data)
 	temp_plane_x = data->player.plane_x;
 	if (data->player.key_left)
 	{
-		angle = -ROTSPEED;
+		angle = -ROTSPEED * data->time.delta_time;
 	}
 	else
-		angle = ROTSPEED;
+		angle = ROTSPEED * data->time.delta_time;
 	data->player.dir_x = data->player.dir_x * cos(angle)
 		- data->player.dir_y * sin(angle);
 	data->player.dir_y = temp_dir_x * sin(angle)

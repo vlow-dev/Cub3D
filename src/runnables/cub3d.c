@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:41 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 15:34:09 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/02 15:00:56 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_map(t_data *data, char* av)
 {
 	t_result *res;
 
-	res = parse_file(av);
+	res = get_map(av);
 	if (res->result == ERROR)
 	{
 		ft_printf_fd(2, "%s\n", res->data.err);
@@ -32,7 +32,22 @@ int	parse_map(t_data *data, char* av)
 	}
 	data->map = *(res->data.map);
 	free(res->data.map);
+	ft_printf("data->map.pp->x = [%d]\n", data->map.pp->x);
+	ft_printf("data->map.pp->y = [%d]\n", data->map.pp->y);
+	ft_printf("data->map.pp->dir = [%c]\n", data->map.pp->dir);
 	return (1);
+}
+
+void init_fps(t_data *data)
+{
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	data->time.cur_time_ms = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	data->time.last_time_ms = data->time.cur_time_ms;
+	data->time.st_time = data->time.cur_time_ms;
+	data->time.delta_time = 0.0;
+	data->time.fps_count = 0;
+	data->time.fps = 0;
 }
 
 void inits_modules(t_data *data)
@@ -43,6 +58,7 @@ void inits_modules(t_data *data)
 	init_player(data);
 	init_minimap(data);
 	init_doors(data);
+	init_fps(data);
 }
 
 int	main(int ac, char **av)
