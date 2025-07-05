@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/02 14:26:28 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 16:23:11 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@
 /* === MINIMAP COLORS === */
 # define MM_WALL     0x00404040
 # define MM_FLOOR    0x00AAAAAA
-# define MM_DOOR_C   0x00654321
-# define MM_DOOR_O   0x00FFD700
+# define MM_DOOR_C   0x00B22222
+# define MM_DOOR_O   0x0000FF00
 # define MM_PLAYER   0x00FF0000
 # define MM_VIEW     0x0000FF00
 # define MM_BORDER   0x00FFFFFF
 
 // player
 # define MOUSESENS	0.0003
-# define MOVESPEED	1.0
+# define MOVESPEED	2.0
 # define ROTSPEED	(180.0 * M_PI / 180.0)
 # define ANISPEED	0.1
 
@@ -106,6 +106,7 @@ typedef struct s_map
 	// char				*so;
 	// char				*we;
 	// char				*ea;
+	int					texSize;
 	char				*tex[TEX_SIZE];
 	unsigned int		floor;
 	unsigned int		ceiling;
@@ -254,7 +255,7 @@ void	a_key(t_data *data);
 void	s_key(t_data *data);
 void	w_key(t_data *data);
 void	move_key(t_data *data);
-int		valid_tile(t_data *data, char tile, int y, int x);
+int		valid_tile(t_data *data, double y, double x);
 void	try_toggle_door(t_data *data);
 
 // for testing

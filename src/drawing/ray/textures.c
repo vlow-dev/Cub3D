@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:15 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:27:15 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 15:50:35 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ void	ray_tex_draw(t_data *data, int ray)
 	while (++y < HEIGHT)
 	{
 		if (y < data->draw.start)
-			my_pixel_put(data, ray, y, CEILING);
+			my_pixel_put(data, ray, y, data->map.ceiling);
 		else if (y <= data->draw.end)
 			ray_tex_wall(data, ray, y);
 		else
-			my_pixel_put(data, ray, y, FLOOR);
+			my_pixel_put(data, ray, y, data->map.floor);
 	}
 }

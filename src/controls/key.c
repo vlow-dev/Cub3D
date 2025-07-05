@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:33 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/02 14:27:43 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 16:26:15 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ void	w_key(t_data *data)
 
 	new_x = data->player.pos_x + data->player.dir_x * MOVESPEED * data->time.delta_time;
 	new_y = data->player.pos_y + data->player.dir_y * MOVESPEED * data->time.delta_time;
-	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
-		(int)data->player.pos_y, (int)new_x))
+	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
-	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x],
-		(int)new_y, (int)data->player.pos_x))
+	if (valid_tile(data, new_y, data->player.pos_x))
 		data->player.pos_y = new_y;
 }
 
@@ -38,11 +36,9 @@ void	s_key(t_data *data)
 
 	new_x = data->player.pos_x - data->player.dir_x * MOVESPEED * data->time.delta_time;
 	new_y = data->player.pos_y - data->player.dir_y * MOVESPEED * data->time.delta_time;
-	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
-		(int)data->player.pos_y, (int)new_x))
+	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
-	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x],
-		(int)new_y, (int)data->player.pos_x))
+	if (valid_tile(data, new_y, data->player.pos_x))
 		data->player.pos_y = new_y;
 }
 
@@ -53,11 +49,9 @@ void	a_key(t_data *data)
 
 	new_x = data->player.pos_x - data->player.plane_x * MOVESPEED * data->time.delta_time;
 	new_y = data->player.pos_y - data->player.plane_y * MOVESPEED * data->time.delta_time;
-	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
-		(int)data->player.pos_y, (int)new_x))
+	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
-	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x],
-		(int)new_y, (int)data->player.pos_x))
+	if (valid_tile(data, new_y, data->player.pos_x))
 		data->player.pos_y = new_y;
 }
 
@@ -68,11 +62,9 @@ void	d_key(t_data *data)
 
 	new_x = data->player.pos_x + data->player.plane_x * MOVESPEED * data->time.delta_time;
 	new_y = data->player.pos_y + data->player.plane_y * MOVESPEED * data->time.delta_time;
-	if (valid_tile(data, data->map.maps[(int)data->player.pos_y][(int)new_x],
-		(int)data->player.pos_y, (int)new_x))
+	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
-	if (valid_tile(data, data->map.maps[(int)new_y][(int)data->player.pos_x],
-		(int)new_y, (int)data->player.pos_x))
+	if (valid_tile(data, new_y, data->player.pos_x))
 		data->player.pos_y = new_y;
 }
 

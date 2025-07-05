@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:37 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:27:38 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 12:49:48 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ static int	assign_rgb(char **rgb, int **j)
 	(*j)[0] = ft_atoi(rgb[0]);
 	(*j)[1] = ft_atoi(rgb[1]);
 	(*j)[2] = ft_atoi(rgb[2]);
-	if (((*j)[0] < 0 || (*j)[0] > 255) && ((*j)[1] < 0 || (*j)[1] > 255)
-		&& ((*j)[2] < 0 || (*j)[0] > 255))
+	if ((*j)[0] < 0 || (*j)[0] > 255 ||
+		(*j)[1] < 0 || (*j)[1] > 255 ||
+		(*j)[2] < 0 || (*j)[2] > 255)
 	{
 		free(*j);
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	get_colours(char *line)
@@ -85,14 +86,11 @@ int	get_colours(char *line)
 	while (*(++rgb_itr))
 		i++;
 	if (i != 3)
-		return (-1);
+		return (free(j), free(clean), split_free((void **)rgb), -1);
 	if (assign_rgb(rgb, &j))
-	{
-		free(clean);
-		return (-1);
-	}
-	i = (j[0] << 16 | j[1] << 8 | j[2]);
-	free(rgb);
+		return (free(j), free(clean), split_free((void **)rgb), -1);
+	i = (0xFF << 24) | (j[0] << 16) | (j[1] << 8) | j[2];
+	split_free((void **)rgb); // frreee split
 	free(j);
 	free(clean);
 	return (i);

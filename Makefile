@@ -9,15 +9,15 @@ MLX_DIR = minilibx-linux
 LIB_MLX = $(MLX_DIR)/libmlx_Linux.a
 1X_FLAGS = -lXext -lX11 -lm -lz## -lXpm
 
-# SRC = $(wildcard $(SRC_DIR)/*/*/*/*.c)
+SRC = $(shell find $(SRC_DIR) -type f -name '*.c')
 # src/parsing/example_c
-SRC = \
-	src/controls/control.c src/controls/key.c src/controls/mouse.c src/drawing/door.c \
-	src/drawing/draw.c src/drawing/visual.c src/drawing/minimap/border.c src/drawing/minimap/minimap.c \
-	src/drawing/minimap/player.c src/drawing/ray/ray.c src/drawing/ray/textures.c src/parsing/file_handling.c \
-	src/parsing/result.c src/parsing/utils.c src/runnables/cub3d.c src/runnables/main.c \
-	src/parsing/map_validation.c src/parsing/validation_utils.c \
-	src/parsing/get_map.c
+# SRC = \
+# 	src/controls/control.c src/controls/key.c src/controls/mouse.c src/drawing/door.c \
+# 	src/drawing/draw.c src/drawing/visual.c src/drawing/minimap/border.c src/drawing/minimap/minimap.c \
+# 	src/drawing/minimap/player.c src/drawing/ray/ray.c src/drawing/ray/textures.c src/parsing/file_handling.c \
+# 	src/parsing/result.c src/parsing/utils.c src/runnables/cub3d.c src/runnables/main.c \
+# 	src/parsing/map_validation.c src/parsing/validation_utils.c \
+# 	src/parsing/get_map.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 TEST = src/parsing.c
 
@@ -73,12 +73,12 @@ debug: clean all
 	@echo "Enable debug mode"
 
 valgrind:
-	valgrind --leak-check=full ./cub3d
+	valgrind --leak-check=full ./cub3d maps/test_42_map.cub
 
 fval:
-	valgrind -v --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3d
+	valgrind -v --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3d maps/test_42_map.cub
 
-fsanitize: CFLAGS += -fsanitize=address,leak -g3 -O1
+fsanitize: CFLAGS += -fsanitize=address,leak -g3
 fsanitize: clean all
 	@echo "AddressSanitizer enabled for $(NAME)"
 

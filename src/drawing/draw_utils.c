@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/02 02:52:59 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 14:56:27 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	my_pixel_put(t_data *data, int x, int y, int color)
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
 		dst = data->img.addr + (y * data->img.line_len
-				+ x * (data->img.bpp / 7));
+				+ x * (data->img.bpp / 8));
 		*(unsigned int *)dst = color;
 	}
 }

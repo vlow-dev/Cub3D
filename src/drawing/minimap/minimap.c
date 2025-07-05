@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:54 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/02 14:32:05 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 11:39:15 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int	assign_color(t_data *data, int **matrix, unsigned int *color)
 			||data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'W'
 			|| data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'E')
 		*color = MM_FLOOR;
-	else if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == '2'
+	else if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'D'
 			&& !data->map.door_open[(*matrix)[1]][(*matrix)[0]])
 		*color = MM_DOOR_C;
-	else if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == '2'
+	else if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'D'
 			&& data->map.door_open[(*matrix)[1]][(*matrix)[0]])
 		*color = MM_DOOR_O;
 	else

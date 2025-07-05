@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:09 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:27:09 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 13:20:44 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <X11/X.h>
 #include <math.h>
 #include <sys/time.h>
+#include "libft.h"
 
 void	ray_init(t_data *data, int ray)
 {
@@ -25,6 +26,35 @@ void	ray_init(t_data *data, int ray)
 	data->ray.dist_y = fabs(1.0 / data->ray.y);
 	data->ray.tile_x = (int)data->player.pos_x;
 	data->ray.tile_y = (int)data->player.pos_y;
+}
+
+void	init_player(t_data *data)
+{
+	char pSide;
+
+	data->player.pos_x = data->map.pp->x + 0.5;
+	data->player.pos_y = data->map.pp->y + 0.5;
+	pSide = data->map.pp->dir;
+	if (pSide == 'N')
+	{
+		data->player.dir_y = -1;
+		data->player.plane_x = 0.66;
+	}
+	else if (pSide == 'S')
+	{
+		data->player.dir_y = 1;
+		data->player.plane_x = -0.66;
+	}
+	else if (pSide == 'W')
+	{
+		data->player.dir_x = -1;
+		data->player.plane_y = -0.66;
+	}
+	else if (pSide == 'E')
+	{
+		data->player.dir_x = 1;
+		data->player.plane_y = 0.66;
+	}
 }
 
 void	ray_stepdir(t_data *data)
@@ -62,7 +92,7 @@ int	ray_door(t_data *data, int *side)
 	c = data->map.maps[data->ray.tile_y][data->ray.tile_x];
 	if (c == '1')
 		data->ray.door = 0;
-	else if (c == '2'
+	else if (c == 'D'
 		&& data->map.door_open[data->ray.tile_y][data->ray.tile_x] < 1.0)
 	{
 		data->ray.door = 1;

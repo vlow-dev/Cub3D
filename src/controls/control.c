@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:25 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/02 14:11:48 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 16:30:04 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,33 @@ int	reload_win(void *reload)
 	return (0);
 }
 
-int	valid_tile(t_data *data, char tile, int y, int x)
+int	valid_tile(t_data *data, double y, double x)
 {
-	return ((tile == '0'
-			|| tile == 'N' || tile == 'S' || tile == 'W' || tile == 'E')
-		|| (tile == '2'
-			&& data->map.door_open[y][x] == 1));
+	char			tile;
+	const double	bounds = 0.2;
+	const int		d[2] = { -1, 1 };
+	int				i[4];
+	
+	i[0] = -1;
+	while (++i[0] < 2)
+	{
+		i[1] = -1;
+		while (++i[1] < 2)
+		{
+			i[2] = (int)(y + d[i[0]] * bounds);
+			i[3] = (int)(x + d[i[1]] * bounds);
+			if (i[2] < 0 || i[2] >= data->map.y_size)
+				return (0);
+			if (i[3] < 0 || i[3] >= (int)ft_strlen(data->map.maps[i[2]]))
+				return (0);
+			tile = data->map.maps[i[2]][i[3]];
+			if (!(tile == '0' || tile == 'N' || tile == 'S' || tile == 'W'
+				|| tile == 'E' ||
+				(tile == 'D' && data->map.door_open[i[2]][i[3]] == 1)))
+				return (0);
+		}
+	}
+	return (1);
 }
 
 int	key_press(int key, t_data *data)

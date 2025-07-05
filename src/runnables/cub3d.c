@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:41 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/02 15:00:56 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/05 13:12:29 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,6 @@
 #include <X11/X.h>
 #include <sys/time.h>
 #include "stdlib.h"
-
-int	parse_map(t_data *data, char* av)
-{
-	t_result *res;
-
-	res = get_map(av);
-	if (res->result == ERROR)
-	{
-		ft_printf_fd(2, "%s\n", res->data.err);
-		free(res->data.err);
-		return (0);
-	}
-	data->map = *(res->data.map);
-	free(res->data.map);
-	ft_printf("data->map.pp->x = [%d]\n", data->map.pp->x);
-	ft_printf("data->map.pp->y = [%d]\n", data->map.pp->y);
-	ft_printf("data->map.pp->dir = [%c]\n", data->map.pp->dir);
-	return (1);
-}
 
 void init_fps(t_data *data)
 {
@@ -73,7 +54,6 @@ int	main(int ac, char **av)
 	}
 	if (!parse_map(&data, av[1]))
 		return (1);
-	// test_map(&data);
 	inits_modules(&data);
 	mlx_put_image_to_window(data.vars.mlx, data.vars.win, data.img.img, 0, 0);
 	mlx_hook(data.vars.win, KeyPress, KeyPressMask, key_press, &data);
