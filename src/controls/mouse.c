@@ -6,16 +6,13 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:40 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/02 14:09:19 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 15:38:43 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-#include <X11/keysym.h>
 #include "../../minilibx-linux/mlx.h"
-#include <X11/X.h>
 #include <math.h>
-#include <sys/time.h>
 
 void	rotate_player(t_data *data, double angle)
 {

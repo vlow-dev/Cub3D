@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/05 14:56:27 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 17:14:38 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	my_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-void	draw_image_trans(t_data *data, t_img *src, int dst_x, int dst_y)
+static void	draw_image_trans(t_data *data, t_img *src, int dst_x, int dst_y)
 {
 	int				x;
 	int				y;
@@ -62,9 +62,37 @@ void	draw_compass(t_data *data)
 		data->compass.idx = (data->compass.idx + 1) % COMPASS_FRAME;
 		data->compass.timer = 0;
 	}
-
 	frame = &data->c_frame[data->compass.idx];
 	x = WIDTH - frame->x - 10;
 	y = HEIGHT - frame->y - 10;
 	draw_image_trans(data, frame, x, y);
+}
+
+void	init_player(t_data *data)
+{
+	char	st_dir;
+
+	data->player.pos_x = data->map.pp->x + 0.5;
+	data->player.pos_y = data->map.pp->y + 0.5;
+	st_dir = data->map.pp->dir;
+	if (st_dir == 'N')
+	{
+		data->player.dir_y = -1;
+		data->player.plane_x = 0.66;
+	}
+	else if (st_dir == 'S')
+	{
+		data->player.dir_y = 1;
+		data->player.plane_x = -0.66;
+	}
+	else if (st_dir == 'W')
+	{
+		data->player.dir_x = -1;
+		data->player.plane_y = -0.66;
+	}
+	else if (st_dir == 'E')
+	{
+		data->player.dir_x = 1;
+		data->player.plane_y = 0.66;
+	}
 }

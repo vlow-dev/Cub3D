@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/05 16:23:11 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 15:42:11 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@
 // player
 # define MOUSESENS	0.0003
 # define MOVESPEED	2.0
-# define ROTSPEED	(180.0 * M_PI / 180.0)
+# define ROTSPEED	M_PI
 # define ANISPEED	0.1
 
 typedef struct s_vars

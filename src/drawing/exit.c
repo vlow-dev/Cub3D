@@ -6,13 +6,14 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:30:32 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/05 13:24:12 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 17:19:06 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/include/libft.h"
 #include "../../include/cub3d.h"
 #include "../../minilibx-linux/mlx.h"
+#include <inttypes.h>
 #include <stdlib.h>
 
 // ############################################################################
@@ -39,23 +40,38 @@ int	free_mlx(t_data *data)
 	return (1);
 }
 
+void	free_map_tex(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < TEX_SIZE)
+	{
+		free(data->map.tex[i]);
+		mlx_destroy_image(data->vars.mlx, data->tex[i].img);
+	}
+}
+
+void	free_compass_tex(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < COMPASS_FRAME)
+	{
+		mlx_destroy_image(data->vars.mlx, data->c_frame[i].img);
+	}
+}
+
 int	close_exit(t_data *data)
 {
 	split_free((void **)data->map.maps);
 	split_free((void **)data->map.door_open);
 	split_free((void **)data->compass.frame);
 	split_free((void **)data->door.frame);
-	for (int i = 0; i < TEX_SIZE; i++)
-	{
-		free(data->map.tex[i]);
-		mlx_destroy_image(data->vars.mlx, data->tex[i].img);
-	}
-	for (int i = 0; i < COMPASS_FRAME; i++)
-	{
-		mlx_destroy_image(data->vars.mlx, data->c_frame[i].img);
-	}
+	free_map_tex(data);
+	free_compass_tex(data);
 	///need to free other stuff
 	free_mlx(data);
 	exit(0);
 }
-

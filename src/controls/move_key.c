@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key.c                                              :+:      :+:    :+:   */
+/*   move_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:33 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/05 16:26:15 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 15:50:40 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
-#include <X11/keysym.h>
-#include <X11/X.h>
+#include "cub3d.h"
 #include <math.h>
-#include <sys/time.h>
 
 void	w_key(t_data *data)
 {
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x + data->player.dir_x * MOVESPEED * data->time.delta_time;
-	new_y = data->player.pos_y + data->player.dir_y * MOVESPEED * data->time.delta_time;
+	new_x = data->player.pos_x + data->player.dir_x * MOVESPEED
+		* data->time.delta_time;
+	new_y = data->player.pos_y + data->player.dir_y * MOVESPEED
+		* data->time.delta_time;
 	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
 	if (valid_tile(data, new_y, data->player.pos_x))
@@ -34,8 +33,10 @@ void	s_key(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x - data->player.dir_x * MOVESPEED * data->time.delta_time;
-	new_y = data->player.pos_y - data->player.dir_y * MOVESPEED * data->time.delta_time;
+	new_x = data->player.pos_x - data->player.dir_x * MOVESPEED
+		* data->time.delta_time;
+	new_y = data->player.pos_y - data->player.dir_y * MOVESPEED
+		* data->time.delta_time;
 	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
 	if (valid_tile(data, new_y, data->player.pos_x))
@@ -47,8 +48,10 @@ void	a_key(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x - data->player.plane_x * MOVESPEED * data->time.delta_time;
-	new_y = data->player.pos_y - data->player.plane_y * MOVESPEED * data->time.delta_time;
+	new_x = data->player.pos_x - data->player.plane_x * MOVESPEED
+		* data->time.delta_time;
+	new_y = data->player.pos_y - data->player.plane_y * MOVESPEED
+		* data->time.delta_time;
 	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
 	if (valid_tile(data, new_y, data->player.pos_x))
@@ -60,8 +63,10 @@ void	d_key(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = data->player.pos_x + data->player.plane_x * MOVESPEED * data->time.delta_time;
-	new_y = data->player.pos_y + data->player.plane_y * MOVESPEED * data->time.delta_time;
+	new_x = data->player.pos_x + data->player.plane_x * MOVESPEED
+		* data->time.delta_time;
+	new_y = data->player.pos_y + data->player.plane_y * MOVESPEED
+		* data->time.delta_time;
 	if (valid_tile(data, data->player.pos_y, new_x))
 		data->player.pos_x = new_x;
 	if (valid_tile(data, new_y, data->player.pos_x))

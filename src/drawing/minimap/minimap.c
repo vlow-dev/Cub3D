@@ -6,18 +6,14 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:54 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/05 11:39:15 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 17:47:50 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libft/include/libft.h"
 #include "../../../include/cub3d.h"
-#include <X11/keysym.h>
-#include <X11/X.h>
-#include <math.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <sys/time.h>
+#include <math.h>
 
 static void	actual_draw(t_data *data, int **matrix, unsigned int *color)
 {

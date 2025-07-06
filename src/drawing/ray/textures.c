@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:15 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/05 15:50:35 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 17:13:18 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ray_tex_sides(t_data *data, int side)
 			- data->draw.tex_x - 1;
 }
 
-void	ray_tex_wall(t_data *data, int ray, int y)
+static void	ray_tex_wall(t_data *data, int ray, int y)
 {
 	int		wall_step;
 	int		tex_y;

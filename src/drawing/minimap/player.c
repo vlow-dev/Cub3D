@@ -6,14 +6,12 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:03 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 12:27:03 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/06 18:32:00 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/cub3d.h"
-#include <X11/keysym.h>
-#include <X11/X.h>
-#include <sys/time.h>
+#include <math.h>
 
 void	minimap_center_player(t_data *data)
 {
@@ -39,8 +37,8 @@ void	draw_minimap_player(t_data *data)
 {
 	int	matrix[7];
 
-	matrix[0] = MMAP_RADIUS + MMAP_MARGIN;
-	matrix[1] = MMAP_RADIUS + MMAP_MARGIN;
+	matrix[0] = data->mini.p_x + data->mini.p_ox;
+	matrix[1] = data->mini.p_y + data->mini.p_oy;
 	matrix[2] = -1;
 	matrix[3] = 0;
 	matrix[4] = 5;
@@ -59,3 +57,4 @@ void	draw_minimap_player(t_data *data)
 		}
 	}
 }
+
