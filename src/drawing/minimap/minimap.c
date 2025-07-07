@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:54 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/06 17:47:50 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/07 16:10:50 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,55 +15,55 @@
 #include <stdlib.h>
 #include <math.h>
 
-static void	actual_draw(t_data *data, int **matrix, unsigned int *color)
+static void	actual_draw(t_data *data, int *matrix, unsigned int *color)
 {
-	(*matrix)[7] = (*matrix)[4] - (MMAP_RADIUS + MMAP_MARGIN);
-	(*matrix)[8] = (*matrix)[5] - (MMAP_RADIUS + MMAP_MARGIN);
-	if ((*matrix)[7] * (*matrix)[7] + (*matrix)[8]
-			* (*matrix)[8] <= MMAP_RADIUS * MMAP_RADIUS)
-		my_pixel_put(data, (*matrix)[4], (*matrix)[5], *color);
+	matrix[7] = matrix[4] - (MMAP_RADIUS + MMAP_MARGIN);
+	matrix[8] = matrix[5] - (MMAP_RADIUS + MMAP_MARGIN);
+	if (matrix[7] * matrix[7] + matrix[8]
+		* matrix[8] <= MMAP_RADIUS * MMAP_RADIUS)
+		my_pixel_put(data, matrix[4], matrix[5], *color);
 }
 
-static int	assign_color(t_data *data, int **matrix, unsigned int *color)
+static int	assign_color(t_data *data, int *matrix, unsigned int *color)
 {
-	if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == '1')
+	if (data->map.maps[matrix[1]][matrix[0]] == '1')
 		*color = MM_WALL;
-	else if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == '0'
-			|| data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'N'
-			|| data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'S'
-			||data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'W'
-			|| data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'E')
+	else if (data->map.maps[matrix[1]][matrix[0]] == '0'
+			|| data->map.maps[matrix[1]][matrix[0]] == 'N'
+			|| data->map.maps[matrix[1]][matrix[0]] == 'S'
+			||data->map.maps[matrix[1]][matrix[0]] == 'W'
+			|| data->map.maps[matrix[1]][matrix[0]] == 'E')
 		*color = MM_FLOOR;
-	else if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'D'
-			&& !data->map.door_open[(*matrix)[1]][(*matrix)[0]])
+	else if (data->map.maps[matrix[1]][matrix[0]] == 'D'
+			&& !data->map.door_open[matrix[1]][matrix[0]])
 		*color = MM_DOOR_C;
-	else if (data->map.maps[(*matrix)[1]][(*matrix)[0]] == 'D'
-			&& data->map.door_open[(*matrix)[1]][(*matrix)[0]])
+	else if (data->map.maps[matrix[1]][matrix[0]] == 'D'
+			&& data->map.door_open[matrix[1]][matrix[0]])
 		*color = MM_DOOR_O;
 	else
 		return (1);
 	return (0);
 }
 
-static void	draw_logic(t_data *data, int **matrix, unsigned int *color)
+static void	draw_logic(t_data *data, int *matrix, unsigned int *color)
 {
-	if (assign_color(data, &(*matrix), color))
+	if (assign_color(data, matrix, color))
 		return ;
-	(*matrix)[3] = -1;
-	while (++(*matrix)[3] < data->mini.z_scale)
+	matrix[3] = -1;
+	while (++matrix[3] < data->mini.z_scale)
 	{
-		(*matrix)[2] = -1;
-		while (++(*matrix)[2] < data->mini.z_scale)
+		matrix[2] = -1;
+		while (++matrix[2] < data->mini.z_scale)
 		{
-			(*matrix)[4] = (int)((double)((*matrix)[0]
-						* data->mini.z_scale + (*matrix)[2]
+			matrix[4] = (int)((double)(matrix[0]
+						* data->mini.z_scale + matrix[2]
 						+ data->mini.p_ox) + 0.5);
-			(*matrix)[5] = (int)((double)((*matrix)[1]
-						* data->mini.z_scale + (*matrix)[3]
+			matrix[5] = (int)((double)(matrix[1]
+						* data->mini.z_scale + matrix[3]
 						+ data->mini.p_oy) + 0.5);
-			if ((*matrix)[4] < 0 || (*matrix)[5] < 0
-						|| (*matrix)[4] >= WIDTH
-						|| (*matrix)[5] >= HEIGHT)
+			if (matrix[4] < 0 || matrix[5] < 0
+				|| matrix[4] >= WIDTH
+				|| matrix[5] >= HEIGHT)
 				continue ;
 			actual_draw(data, matrix, color);
 		}
@@ -72,20 +72,19 @@ static void	draw_logic(t_data *data, int **matrix, unsigned int *color)
 
 // int	x; 0
 // int	y; 1
-// int	dx; 2
-// int	dy; 3
+// int	x1; 2
+// int	y1; 3
 // int tx; 4
 // int ty; 5
-// int len; 6
+// int x_len; 6
 // int ddx; 7
 // int ddy; 8
 void	draw_minimap(t_data *data)
 {
-	int				*matrix;
+	int				matrix[9];
 	unsigned int	color;
 
-	matrix = malloc(sizeof(int)* 9);
-	color = WHITE;
+	color = MM_BASE;
 	minimap_center_player(data);
 	matrix[1] = -1;
 	while (++(matrix[1]) < data->map.y_size)
@@ -93,11 +92,10 @@ void	draw_minimap(t_data *data)
 		matrix[0] = -1;
 		matrix[6] = ft_strlen(data->map.maps[matrix[1]]);
 		while (++(matrix[0]) < matrix[6])
-			draw_logic(data, (int **)&matrix, &color);
+			draw_logic(data, matrix, &color);
 	}
 	draw_minimap_circle_border(data);
 	draw_minimap_player(data);
-	free(matrix);
 }
 
 void	init_minimap(t_data *data)

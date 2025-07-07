@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:09 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/06 17:11:16 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:38:36 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ static int	ray_door(t_data *data, int *side)
 	{
 		data->ray.door = 1;
 		if (!*side)
-			data->ray.perpDist = ((data->ray.tile_x
+			data->ray.perp_dist = ((data->ray.tile_x
 						+ 0.5 + data->ray.side_x * 0.5
 						* data->map.door_open[data->ray.tile_y]
 					[data->ray.tile_x])
 					- data->player.pos_x) / data->ray.x;
 		else
-			data->ray.perpDist = ((data->ray.tile_y + 0.5
+			data->ray.perp_dist = ((data->ray.tile_y + 0.5
 						+ data->ray.side_y * 0.5
 						* data->map.door_open[data->ray.tile_y]
 					[data->ray.tile_x])
@@ -101,10 +101,10 @@ static void	ray_dda(t_data *data, int *side)
 			break ;
 	}
 	if (*side == 0)
-		data->ray.perpDist = (data->ray.tile_x - data->player.pos_x
+		data->ray.perp_dist = (data->ray.tile_x - data->player.pos_x
 				+ (1 - data->ray.side_x) / 2.0) / data->ray.x;
 	else
-		data->ray.perpDist = (data->ray.tile_y - data->player.pos_y
+		data->ray.perp_dist = (data->ray.tile_y - data->player.pos_y
 				+ (1 - data->ray.side_y) / 2.0) / data->ray.y;
 }
 

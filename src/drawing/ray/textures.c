@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:15 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/06 17:13:18 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:38:16 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	ray_tex_init(t_data *data)
 {
-	data->draw.height = (int)(HEIGHT / data->ray.perpDist);
+	data->draw.height = (int)(HEIGHT / data->ray.perp_dist);
 	data->draw.start = -data->draw.height / 2 + HEIGHT / 2;
 	if (data->draw.start < 0)
 		data->draw.start = 0;
@@ -33,10 +33,10 @@ void	ray_tex_door(t_data *data, int side)
 
 	if (!side)
 		wall_x = data->player.pos_y
-			+ data->ray.perpDist * data->ray.y;
+			+ data->ray.perp_dist * data->ray.y;
 	else
 		wall_x = data->player.pos_x
-			+ data->ray.perpDist * data->ray.x;
+			+ data->ray.perp_dist * data->ray.x;
 	wall_x -= floor(wall_x);
 	data->draw.tex_side = TEX_DO;
 	data->draw.tex_x = (int)(wall_x
@@ -46,10 +46,10 @@ void	ray_tex_door(t_data *data, int side)
 void	ray_tex_sides(t_data *data, int side)
 {
 	data->draw.wall_x = data->player.pos_x
-		+ data->ray.perpDist * data->ray.x;
+		+ data->ray.perp_dist * data->ray.x;
 	if (!side)
 		data->draw.wall_x = data->player.pos_y
-			+ data->ray.perpDist * data->ray.y;
+			+ data->ray.perp_dist * data->ray.y;
 	data->draw.wall_x -= floor(data->draw.wall_x);
 	if (!side)
 	{

@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:30:32 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/06 17:19:06 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/07 14:17:42 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ int	close_exit(t_data *data)
 {
 	split_free((void **)data->map.maps);
 	split_free((void **)data->map.door_open);
+	free(data->map.pp);
 	split_free((void **)data->compass.frame);
-	split_free((void **)data->door.frame);
 	free_map_tex(data);
 	free_compass_tex(data);
-	///need to free other stuff
+	///need to free other stuff maybe?
 	free_mlx(data);
 	exit(0);
 }

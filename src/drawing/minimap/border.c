@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:26:49 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/05 16:39:02 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/07 16:08:23 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 static void	actual_draw(int cx, int cy, int *axises, t_data *data)
 {
-	my_pixel_put(data, cx + axises[2], cy + axises[3], GREY);
-	my_pixel_put(data, cx + axises[3], cy + axises[2], GREY);
-	my_pixel_put(data, cx - axises[3], cy + axises[2], GREY);
-	my_pixel_put(data, cx - axises[2], cy + axises[3], GREY);
-	my_pixel_put(data, cx - axises[2], cy - axises[3], GREY);
-	my_pixel_put(data, cx - axises[3], cy - axises[2], GREY);
-	my_pixel_put(data, cx + axises[3], cy - axises[2], GREY);
-	my_pixel_put(data, cx + axises[2], cy - axises[3], GREY);
+	my_pixel_put(data, cx + axises[2], cy + axises[3], MM_BORDER);
+	my_pixel_put(data, cx + axises[3], cy + axises[2], MM_BORDER);
+	my_pixel_put(data, cx - axises[3], cy + axises[2], MM_BORDER);
+	my_pixel_put(data, cx - axises[2], cy + axises[3], MM_BORDER);
+	my_pixel_put(data, cx - axises[2], cy - axises[3], MM_BORDER);
+	my_pixel_put(data, cx - axises[3], cy - axises[2], MM_BORDER);
+	my_pixel_put(data, cx + axises[3], cy - axises[2], MM_BORDER);
+	my_pixel_put(data, cx + axises[2], cy - axises[3], MM_BORDER);
 }
 
 // 5 here represent thickness bro
