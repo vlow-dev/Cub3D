@@ -14,6 +14,21 @@ typedef enum
   ERROR,
 } e_result;
 
+typedef struct s_point
+{
+	int		x;
+	int		y;
+	int		value;
+	bool	visited;
+}	t_point;
+
+typedef struct s_unvalidated_map 
+{
+	t_point **p;
+	int		x_size;
+	int		y_size;
+} t_unvalidated_map;
+
 typedef struct	s_result
 {
   e_result result;

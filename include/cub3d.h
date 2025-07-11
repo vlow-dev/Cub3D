@@ -77,8 +77,8 @@ typedef struct s_map
 	unsigned int		ceiling;
 	int					y_size;
 	int					x_size;
-	int					**door_open;
 	t_player_pos		*pp;
+	int					to_free;
 }	t_map;
 
 typedef struct s_ani
