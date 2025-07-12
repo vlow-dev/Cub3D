@@ -52,13 +52,13 @@ int	parse_map(t_data *data, char* av)
 	{
 		ft_printf_fd(2, "%s\n", res->data.err);
 		free(res->data.err);
+		free(res);
 		return (0);
 	}
 	data->map = *(res->data.map);
-	free(res->data.map);
+	free(res);
 	return (1);
 }
-
 
 t_result *get_map(char *path)
 {
@@ -67,14 +67,25 @@ t_result *get_map(char *path)
 
 	file = parse_file(path);
 	if (file->result == OK)
+	{
 		m = file->data.map;
+		free(file);
+	}
 	else
-		return result_error(file->data.err); // need to free t_mapss
-	if (is_map_valid(m))
-		// TODO: need to free t_map here.
+	{
+		free_map(m);
+		return (file); // need to free t_mapss
+	}
+	if (!is_map_valid(m))
+	{
+		free_map(m);
 		return result_error("Invalid map received");
+	}
 	m->pp = get_pp(m->maps);
 	if (m->pp == NULL)
+	{
+		free_map(m);
 		return result_error("Map with no player received");
+	}
 	return result_ok(&m);
 }

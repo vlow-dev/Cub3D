@@ -51,6 +51,11 @@ static int	get_lines(t_list **lines, int fd)
 	return (1);
 }
 
+void	free_str(void *s)
+{
+	free(s);
+}
+
 static char	**extract_file(char *file_path)
 {
 	int		fd;
@@ -71,11 +76,11 @@ static char	**extract_file(char *file_path)
 	itr = lines;
 	while (itr)
 	{
-		ret[fd++] = (char *)itr->content;
+		ret[fd++] = ft_strdup((char *)itr->content);
 		itr = itr->next;
 	}
 	ret[fd] = NULL;
-	ft_lstclear(&lines, NULL);
+	ft_lstclear(&lines, free_str);
 	return (ret);
 }
 
@@ -145,7 +150,6 @@ static t_result	*handle_map(t_map **map, char **raw_file, int line_idx)
 		(*map)->maps[size++] = ft_strdup(raw_file[line_idx++]);
 	}
 	(*map)->maps[size] = NULL;
-	// split_print((*map)->maps);
 	return (result_ok(map));
 }
 
@@ -160,19 +164,13 @@ t_result	*parse_file(char *file_path)
 	if (ft_strlen(file_path) <= 4
 		|| ft_strncmp(".cub", &file_path[leng - 4], 4))
 		return (result_error("file provided is not a .cub file"));
-	// res = malloc(sizeof(t_result));
-	// if (!res)
-	// 	return (result_error("malloc failed"));
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (result_error("malloc failed"));
-		// return (free(res), result_error("malloc failed"));
-	// ft_memset(res, 0, sizeof(t_result));
 	ft_memset(map, 0, sizeof(t_map));
 	raw_file = extract_file(file_path);
 	if (!raw_file)
 		return (result_error("invalid file format provide"));
-	// extract_info(&map, raw_file);
 	res = handle_map(&map, raw_file, extract_info(&map, raw_file));
 	split_free((void **)raw_file);
 	return (res);

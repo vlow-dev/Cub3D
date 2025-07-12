@@ -38,11 +38,8 @@ t_result	*result_ok(t_map **map)
 	res = malloc(sizeof(t_result));
 	if (!res)
 	{
-		for (int i = 0; i < TEX_SIZE; i++)
-		{
-			free((*map)->tex[i]);
-		}
-		return (split_free((void **)(*map)->maps), NULL); // and freeee
+		free_map(*map);
+		return (malloc(0));
 	}
 	ft_memset(res, 0, sizeof(t_result));
 	res->result = OK;

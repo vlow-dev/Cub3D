@@ -6,6 +6,7 @@
 t_validify	*init_valid(t_map *map)
 {
 	int			y;
+	int			x;
 	t_validify	*v;
 
 	v = malloc(sizeof(t_validify));
@@ -15,24 +16,40 @@ t_validify	*init_valid(t_map *map)
 	while (y < map->y_size)
 	{
 		v->visited[y] = malloc(sizeof(int) * safe_strlen(map->maps[y]));
+		x = 0;
+		while (x < safe_strlen(map->maps[y]))
+			v->visited[y][x++] = 0;
 		y++;
 	}
 	return (v);
 }
 
+void	free_valid(t_map *map, t_validify *v)
+{
+	int	y;
+
+	y = 0;
+	while (y < map->y_size)
+	{
+		free(v->visited[y++]);
+	}
+	free(v->visited);
+	free(v);
+}
+
 void	flood_fill(t_validify *v, int x, int y, int *is_err)
 {
-	int	value;
+	char	value;
 
 	if (*is_err == 1)
 		return ;
-	if (x < 0 || x >= v->map->x_size || y < 0 || y >= v->map->y_size)
+	if (x < 0 || x >= safe_strlen(v->map->maps[y]) || y < 0 || y >= v->map->y_size)
 	{
 		*is_err = 1;
 		return ;
 	}
 	value = v->map->maps[y][x];
-	if (value == 1 || v->visited[y][x] == 1)
+	if (value == '1' || v->visited[y][x] == 1)
 		return ;
 	if (value == 'O' || value == 'D' || value == 0 || value == 'N'
 		|| value == 'S' || value == 'E' || value == 'W')
@@ -52,7 +69,7 @@ int	is_map_valid(t_map *map)
 {
 	int			x;
 	int			y;
-	int			is_err;
+	static int	is_err;
 	t_validify	*v;
 
 	v = init_valid(map);
@@ -60,7 +77,7 @@ int	is_map_valid(t_map *map)
 	while (y < map->y_size)
 	{
 		x = 0;
-		while (x < map->x_size)
+		while (x < safe_strlen(map->maps[y]))
 		{
 			if (map->maps[y][x] == 'N' || map->maps[y][x] == 'S'
 				|| map->maps[y][x] == 'W'
@@ -73,5 +90,6 @@ int	is_map_valid(t_map *map)
 		}
 		y++;
 	}
+	free_valid(map, v);
 	return (is_err == 0);
 }
