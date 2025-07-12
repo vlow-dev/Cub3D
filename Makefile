@@ -9,15 +9,30 @@ MLX_DIR = minilibx-linux
 LIB_MLX = $(MLX_DIR)/libmlx_Linux.a
 1X_FLAGS = -lXext -lX11 -lm -lz## -lXpm
 
-SRC = $(shell find $(SRC_DIR) -type f -name '*.c')
-# src/parsing/example_c
-# SRC = \
-# 	src/controls/control.c src/controls/key.c src/controls/mouse.c src/drawing/door.c \
-# 	src/drawing/draw.c src/drawing/visual.c src/drawing/minimap/border.c src/drawing/minimap/minimap.c \
-# 	src/drawing/minimap/player.c src/drawing/ray/ray.c src/drawing/ray/textures.c src/parsing/file_handling.c \
-# 	src/parsing/result.c src/parsing/utils.c src/runnables/cub3d.c src/runnables/main.c \
-# 	src/parsing/map_validation.c src/parsing/validation_utils.c \
-# 	src/parsing/get_map.c
+# SRC = $(shell find $(SRC_DIR) -type f -name '*.c')
+SRC = \
+  src/controls/keyhooks.c \
+  src/controls/mouse.c \
+  src/controls/move_key.c \
+  src/controls/reload_win.c \
+  src/drawing/door/door.c \
+  src/drawing/draw_utils.c \
+  src/drawing/exit.c \
+  src/drawing/load_textures.c \
+  src/drawing/minimap/border.c \
+  src/drawing/minimap/minimap.c \
+  src/drawing/minimap/player.c \
+  src/drawing/ray/ray.c \
+  src/drawing/ray/textures.c \
+  src/parsing/file_handling.c \
+  src/parsing/get_map.c \
+  src/parsing/map_memory.c \
+  src/parsing/map_validation.c \
+  src/parsing/result.c \
+  src/parsing/utils.c \
+  src/parsing/validation_utils.c \
+  src/runnables/cub3d.c
+
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 TEST = src/parsing.c
 
