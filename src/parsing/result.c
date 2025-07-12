@@ -22,7 +22,7 @@ t_result	*result_error(char *str)
 
 	res = malloc(sizeof(t_result));
 	if (!res)
-		return (NULL); // and freeee
+		return (NULL);
 	ft_memset(res, 0, sizeof(t_result));
 	res->result = ERROR;
 	res->data.err = ft_strdup(str);

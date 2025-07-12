@@ -65,13 +65,10 @@ void	free_compass_tex(t_data *data)
 
 int	close_exit(t_data *data)
 {
-	split_free((void **)data->map.maps);
 	split_free((void **)data->map.door_open);
-	free(data->map.pp);
 	split_free((void **)data->compass.frame);
 	free_map_tex(data);
 	free_compass_tex(data);
-	///need to free other stuff maybe?
 	free_mlx(data);
 	exit(0);
 }

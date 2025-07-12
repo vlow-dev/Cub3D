@@ -90,7 +90,7 @@ int	get_colours(char *line)
 	if (assign_rgb(rgb, &j))
 		return (free(j), free(clean), split_free((void **)rgb), -1);
 	i = (0xFF << 24) | (j[0] << 16) | (j[1] << 8) | j[2];
-	split_free((void **)rgb); // frreee split
+	split_free((void **)rgb);
 	free(j);
 	free(clean);
 	return (i);
@@ -101,7 +101,7 @@ int	safe_strlen(char *str)
 	int	i;
 
 	i = 0;
-    if (!str)
+	if (!str)
 		return (i);
 	while (str[i])
 		i++;
