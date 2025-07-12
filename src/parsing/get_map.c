@@ -6,7 +6,7 @@
 /*   By: ialee <ialee@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:34 by ialee             #+#    #+#             */
-/*   Updated: 2025/06/27 15:28:29 by ialee            ###   ########.fr       */
+/*   Updated: 2025/07/12 21:19:06 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,31 @@ static int	is_player_char(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-static void	init_pp(t_player_pos **pp, int y, int x, char dir)
-{
-	(*pp) = malloc(sizeof(t_player_pos));
-	(*pp)->y = y;
-	(*pp)->x = x;
-	(*pp)->dir = dir;
-}
-
-static t_player_pos	*get_pp(char **map)
+static int	get_pp(t_map *m)
 {
 	int				i;
 	int				j;
 	int				width;
-	t_player_pos	*pp;
 
 	i = 0;
-	j = 0;
-	pp = NULL;
-	while (map[i])
+	while (m->maps[i])
 	{
-		width = safe_strlen(map[i]);
+		width = safe_strlen(m->maps[i]);
 		j = 0;
 		while (j < width)
 		{
-			if (is_player_char(map[i][j]))
+			if (is_player_char(m->maps[i][j]))
 			{
-				init_pp(&pp, i, j, map[i][j]);
+				m->pp.dir = m->maps[i][j];
+				m->pp.x = j;
+				m->pp.y = i;
+				return (1);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (pp);
+	return (0);
 }
 
 int	parse_map(t_data *data, char *av)
@@ -91,8 +83,7 @@ t_result	*get_map(char *path)
 		free_map(m);
 		return (result_error("Invalid map received"));
 	}
-	m->pp = get_pp(m->maps);
-	if (m->pp == NULL)
+	if (!get_pp(m))
 	{
 		free_map(m);
 		return (result_error("Map with no player received"));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: ialee <ialee@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:31 by vlow              #+#    #+#             */
-/*   Updated: 2025/06/27 15:30:52 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/12 21:37:57 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	**extract_file(char *file_path)
 		itr = itr->next;
 	}
 	ret[fd] = NULL;
-	ft_lstclear(&lines, free_str);
+	ft_lstclear(&lines, free);
 	return (ret);
 }
 
@@ -82,7 +82,7 @@ static int	extract_info(t_map **map, char **raw_file)
 			else if (raw_file[line_idx][0] == 'C')
 				(*map)->ceiling = get_colours(raw_file[line_idx]);
 		}
-		if ((*map)->floor > 1 || (*map)->ceiling > 1)
+		if ((*map)->floor > 1 && (*map)->ceiling > 1)
 			break ;
 		line_idx++;
 	}
@@ -107,7 +107,7 @@ static t_result	*handle_map(t_map **map, char **raw_file, int line_idx)
 	(*map)->y_size = (size - line_idx);
 	(*map)->maps = malloc(sizeof(char *) * ((*map)->y_size + 1));
 	if (!(*map)->maps)
-		return (result_error("malloc failed"));
+		return (free_map(*map), result_error("malloc failed"));
 	size = 0;
 	while (raw_file[line_idx])
 	{
@@ -136,7 +136,7 @@ t_result	*parse_file(char *file_path)
 	ft_memset(map, 0, sizeof(t_map));
 	raw_file = extract_file(file_path);
 	if (!raw_file)
-		return (result_error("invalid file format provide"));
+		return (free_map(map), result_error("invalid file format provide"));
 	res = handle_map(&map, raw_file, extract_info(&map, raw_file));
 	split_free((void **)raw_file);
 	return (res);

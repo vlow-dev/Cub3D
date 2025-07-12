@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:26 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/06 17:27:08 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/12 21:15:38 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "../../include/cub3d.h"
 #include "../../minilibx-linux/mlx.h"
 #include <X11/X.h>
+#include <stdlib.h>
 
 static void	check_tex(t_data *data, int i)
 {
@@ -28,6 +29,7 @@ static void	check_tex(t_data *data, int i)
 	{
 		ft_printf("[%s] → cannot access file: %s\n", data->map.tex[i],
 			strerror(errno));
+		free(data->map.tex[i]);
 		if (i < 0 || i > 4)
 			return ;
 		else if (i == 4)

@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:31:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/07 16:13:52 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/12 20:28:30 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_map
 	int					y_size;
 	int					x_size;
 	int					**door_open;
-	t_player_pos		*pp;
+	t_player_pos		pp;
 }	t_map;
 
 typedef struct s_ani

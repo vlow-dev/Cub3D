@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:30:32 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/07 14:17:42 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/12 20:55:52 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	free_compass_tex(t_data *data)
 
 int	close_exit(t_data *data)
 {
+	split_free((void **)data->map.maps);
 	split_free((void **)data->map.door_open);
 	split_free((void **)data->compass.frame);
 	free_map_tex(data);

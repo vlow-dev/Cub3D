@@ -6,26 +6,24 @@
 /*   By: ialee <ialee@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:34 by ialee             #+#    #+#             */
-/*   Updated: 2025/06/27 15:28:29 by ialee            ###   ########.fr       */
+/*   Updated: 2025/07/12 21:19:35 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "cub3d.h"
+#include "libft.h"
 
 void	free_map(t_map *map)
 {
 	int	i;
 
 	i = 0;
-	while (i < TEX_SIZE)
+	while (map->tex[i] && i < TEX_SIZE)
 		free(map->tex[i++]);
 	i = 0;
-	while (i < map->y_size)
-		free(map->maps[i++]);
-	free(map->maps);
-	free(map->pp);
-	split_free(map->door_open);
+	split_free((void **)map->maps);
+	split_free((void **)map->door_open);
 	free(map);
 }
 

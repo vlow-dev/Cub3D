@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:23 by vlow              #+#    #+#             */
-/*   Updated: 2025/07/06 17:14:38 by vlow             ###   ########.fr       */
+/*   Updated: 2025/07/12 20:35:47 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	init_player(t_data *data)
 {
 	char	st_dir;
 
-	data->player.pos_x = data->map.pp->x + 0.5;
-	data->player.pos_y = data->map.pp->y + 0.5;
-	st_dir = data->map.pp->dir;
+	data->player.pos_x = data->map.pp.x + 0.5;
+	data->player.pos_y = data->map.pp.y + 0.5;
+	st_dir = data->map.pp.dir;
 	if (st_dir == 'N')
 	{
 		data->player.dir_y = -1;
