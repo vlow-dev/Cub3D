@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 
 SRC_DIR = src
 INC_DIR = include
@@ -73,10 +73,10 @@ debug: clean all
 	@echo "Enable debug mode"
 
 valgrind:
-	valgrind --leak-check=full ./cub3d maps/test_42_map.cub
+	valgrind --leak-check=full ./$(NAME) maps/valid/42.cub
 
 fval:
-	valgrind -v --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3d maps/test_42_map.cub
+	valgrind -v --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/valid/42.cub
 
 fsanitize: CFLAGS += -fsanitize=address,leak -g3
 fsanitize: clean all
