@@ -70,7 +70,7 @@ t_result *get_map(char *path)
 		m = file->data.map;
 	else
 		return result_error(file->data.err); // need to free t_mapss
-	if (is_map_valid(m->maps))
+	if (is_map_valid(m))
 		// TODO: need to free t_map here.
 		return result_error("Invalid map received");
 	m->pp = get_pp(m->maps);

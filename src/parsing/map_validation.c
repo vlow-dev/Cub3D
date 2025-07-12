@@ -3,122 +3,75 @@
 #include <string.h>
 #include "../../include/parsing.h"
 
-// Enhanced version using flood fill algorithm
-static int flood_fill_check(char **map, int **visited, int x, int y, int height)
+t_validify	*init_valid(t_map *map)
 {
-	int	width;
+	int			y;
+	t_validify	*v;
 
-	width = safe_strlen(map[x]);
-    if (x < 0 || y < 0 || x >= height)
-        return (0);
-    if (y >= width)
-        return (0);
-    if (visited[x][y] || map[x][y] == '1')
-        return (1);
-    if (map[x][y] == ' ')
-        return (0);
-    if (!is_valid_floor(map[x][y]))
-        return (0);
-    visited[x][y] = 1;
-	if (!flood_fill_check(map, visited, x - 1, y, height)
-        || !flood_fill_check(map, visited, x + 1, y, height)
-        || !flood_fill_check(map, visited, x, y - 1, height)
-        || !flood_fill_check(map, visited, x, y + 1, height))
-        return (0);
-    return (1);
-}
-
-static int free_visited(int **visited, int height, int ret)
-{
-	int	i;
-
-	i = 0;
-	while (i < height)
+	v = malloc(sizeof(t_validify));
+	v->map = map;
+	v->visited = malloc(sizeof(int *) * map->y_size);
+	y = 0;
+	while (y < map->y_size)
 	{
-		free(visited[i]);
-		i++;
+		v->visited[y] = malloc(sizeof(int) * safe_strlen(map->maps[y]));
+		y++;
 	}
-    free(visited);
-	return (ret);
+	return (v);
 }
 
-static int	seek_player(char **map, int height)
+void	flood_fill(t_validify *v, int x, int y, int *is_err)
 {
-	int	i;
-	int	j;
-	int	width;
-	int	player_count;
+	int	value;
 
-	i = 0;
-	j = 0;
-	player_count = 0;
-	while (i < height)
-    {
-        width = safe_strlen(map[i]);
-		while (j < width)
-        {
-            if (map[i][j] == 'N' || map[i][j] == 'S' || 
-                map[i][j] == 'E' || map[i][j] == 'W')
-                player_count++;
-			j++;
-        }
-		i++;
-    }
-	return (player_count);
-}
-
-static int	flood_fill_logic(char **map, int height, int **visited)
-{
-	int	i;
-	int	j;
-	int	width;
-
-	i = 0;
-	j = 0;
-	while (i < height)
-    {
-        width = safe_strlen(map[i]);
-		while (j < width)
-        {
-            if (is_valid_floor(map[i][j]) && !visited[i][j])
-            {
-                if (!flood_fill_check(map, visited, i, j, height))
-                {
-					return (free_visited(visited, height, 0));
-                }
-            }
-			j++;
-        }
-		i++;
-    }
-	return (1);
-}
-
-int is_map_valid(char **map)
-{
-	int	i;
-    int height;
-	int	max_width;
-    int **visited;
-   
-	i = 0;
-    if (!map || !map[0])
+	if (*is_err == 1)
+		return ;
+	if (x < 0 || x >= v->map->x_size || y < 0 || y >= v->map->y_size)
 	{
-        return (0);
+		*is_err = 1;
+		return ;
 	}
-	max_width = get_max_width(map, &height);
-    visited = malloc(sizeof(int *) * height);
-    if (!visited)
-		return (0);
-	while (i < height)
-    {
-        visited[i] = calloc(max_width, sizeof(int));
-        if (!visited[i++])
-			return (free_visited(visited, height, 0));
-    }
-    if (seek_player(map, height) != 1)
-		return (free_visited(visited, height, 0));
-	if (!flood_fill_logic(map, height, visited))
-		return (0);
-	return (free_visited(visited, height, 1)); 
+	value = v->map->maps[y][x];
+	if (value == 1 || v->visited[y][x] == 1)
+		return ;
+	if (value == 'O' || value == 'D' || value == 0 || value == 'N'
+		|| value == 'S' || value == 'E' || value == 'W')
+		v->visited[y][x] = 1;
+	else
+	{
+		*is_err = 1;
+		return ;
+	}
+	flood_fill(v, x - 1, y, is_err);
+	flood_fill(v, x + 1, y, is_err);
+	flood_fill(v, x, y - 1, is_err);
+	flood_fill(v, x, y + 1, is_err);
+}
+
+int	is_map_valid(t_map *map)
+{
+	int			x;
+	int			y;
+	int			is_err;
+	t_validify	*v;
+
+	v = init_valid(map);
+	y = 0;
+	while (y < map->y_size)
+	{
+		x = 0;
+		while (x < map->x_size)
+		{
+			if (map->maps[y][x] == 'N' || map->maps[y][x] == 'S'
+				|| map->maps[y][x] == 'W'
+				|| map->maps[y][x] == 'E')
+			{
+				flood_fill(v, x, y, &is_err);
+				break ;
+			}
+			x++;
+		}
+		y++;
+	}
+	return (is_err == 0);
 }

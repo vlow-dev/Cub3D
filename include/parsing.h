@@ -20,6 +20,12 @@ typedef struct	s_result
   u_data data;
 } t_result;
 
+typedef struct	s_validify
+{
+	t_map	*map;
+	int		**visited;
+} t_validify;
+
 // result union for error handling
 t_result  *result_error(char *str);
 t_result  *result_ok(t_map **map);
@@ -31,7 +37,7 @@ int			get_colours(char *line);
 int			safe_strlen(char *str);
 int			get_max_width(char **map, int *i);
 int			is_valid_floor(char c);
-int			is_map_valid(char **map);
+int			is_map_valid(t_map *map);
 t_result	*get_map(char *path);
 int			parse_map(t_data *data, char* av);
 
