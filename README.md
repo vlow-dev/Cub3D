@@ -1,7 +1,7 @@
 # Cub3D 🎮
 A Wolfenstein-3D–style raycasting engine built with **C** and **MiniLibX (X11)**. Renders a 3D scene from a 2D map, with textured walls and basic player movement.
 
-> 42KL educational project. Linux build with `minilibx-linux`.
+<!-- 42KL educational project. Linux build with `minilibx-linux`. -->
 
 ---
 
